@@ -1,4 +1,6 @@
 import React from "react";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 
 const Categories = () => {
   const array = [
@@ -38,10 +40,12 @@ const Categories = () => {
             return (
               <div class='p-2 md:w-1/3 sm:mb-0 mb-6 border-2 rounded-md border-gray-200'>
                 <div class='rounded-lg h-64 overflow-hidden'>
-                  <img
+                  <LazyLoadImage
                     alt='content'
-                    class='object-cover object-center h-full w-full'
+                    className='img-lazy object-cover object-center h-full w-full '
                     src={array.images}
+                    placeholderSrc='https://reactnativecode.com/wp-content/uploads/2018/02/Default_Image_Thumbnail.png'
+                    effect='blur' // opacity | black-and-white
                   />
                 </div>
                 <h2 class='text-xl font-medium title-font text-gray-900 mt-5'>

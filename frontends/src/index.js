@@ -14,6 +14,7 @@ root.render(
       <Toaster
         position='top-right'
         toastOptions={{
+          duration: 4000,
           style: {
             borderRadius: "8px",
           },
