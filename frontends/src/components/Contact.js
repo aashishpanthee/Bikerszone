@@ -4,23 +4,24 @@ import {
   MapPinIcon,
 } from "@heroicons/react/24/outline";
 import emailjs from "@emailjs/browser";
+import { toast } from "react-hot-toast";
 export default function Contact() {
   const sendEmail = (e) => {
     e.preventDefault();
 
     emailjs
       .sendForm(
-        "service_e8rugp9",
-        "template_vogjv4o",
+        "service_zis0xqq",
+        "template_aqbhj68",
         e.target,
-        "HMDTuBXNunQ1mWh_a"
+        "rKJvlPIG0AD4GKbDI"
       )
       .then(
         (result) => {
-          console.log(result.text);
+          toast.success("Message sent successfully");
         },
         (error) => {
-          console.log(error.text);
+          toast.error("Somthing went wrong !!");
         }
       );
     e.target.reset();
@@ -113,7 +114,7 @@ export default function Contact() {
             >
               <div>
                 <label
-                  htmlFor='first-name'
+                  htmlFor='user_firstname'
                   className='block text-sm font-medium'
                 >
                   First name
@@ -121,9 +122,9 @@ export default function Contact() {
                 <div className='mt-1'>
                   <input
                     type='text'
-                    name='first-name'
-                    id='first-name'
-                    autoComplete='given-name'
+                    name='user_firstname'
+                    id='user_firstname'
+                    autoComplete='given_name'
                     required
                     className='block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500'
                   />
@@ -131,7 +132,7 @@ export default function Contact() {
               </div>
               <div>
                 <label
-                  htmlFor='last-name'
+                  htmlFor='user_lastname'
                   className='block text-sm font-medium'
                 >
                   Last name
@@ -139,10 +140,10 @@ export default function Contact() {
                 <div className='mt-1'>
                   <input
                     type='text'
-                    name='last-name'
-                    id='last-name'
+                    name='user_lastname'
+                    id='lastname'
                     required
-                    autoComplete='family-name'
+                    autoComplete='family_name'
                     className='block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500'
                   />
                 </div>
@@ -154,7 +155,7 @@ export default function Contact() {
                 <div className='mt-1'>
                   <input
                     id='email'
-                    name='email'
+                    name='user_email'
                     type='email'
                     autoComplete='email'
                     required
