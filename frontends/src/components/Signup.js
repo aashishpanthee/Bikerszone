@@ -1,8 +1,21 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { userRegister } from "../redux/features/User/authAction";
 import { Link } from "react-router-dom";
 import { Formik, ErrorMessage } from "formik";
 import { ValidateUser } from "../common/Validation";
+import { clearFields } from "../redux/features/User/authSlice";
+import Spinner from "../Helper/Spinner";
 const Signup = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { loading, error, success } = useSelector((state) => state.auth);
+  useEffect(() => {
+    if (success) {
+      navigate(-1);
+    }
+  }, [success]);
   return (
     <div className='flex flex-col justify-center h-screen px-6 py-12 lg:px-8 bg-slate-50'>
       <div className='mt-5 sm:mx-auto sm:w-full sm:max-w-sm'>
@@ -19,7 +32,7 @@ const Signup = () => {
       </div>
       <Formik
         initialValues={{
-          name: "",
+          userName: "",
           email: "",
           password: "",
           confirmPassword: "",
@@ -27,6 +40,8 @@ const Signup = () => {
         validationSchema={ValidateUser}
         onSubmit={async (values, actions) => {
           console.log(values);
+          await dispatch(userRegister(values));
+          await dispatch(clearFields());
         }}
       >
         {(props) => (
@@ -38,20 +53,20 @@ const Signup = () => {
               </div>
               <div>
                 <label
-                  for='name'
+                  for='userName'
                   className='block text-sm font-medium leading-6 text-gray-900'
                 >
                   Username
                 </label>
                 <div className='mt-2'>
                   <input
-                    id='name'
-                    name='name'
+                    id='userName'
+                    name='userName'
                     type='text'
-                    autocomplete='name'
+                    autocomplete='userName'
                     onChange={props.handleChange}
                     onBlur={props.handleBlur}
-                    value={props.values.name || ""}
+                    value={props.values.userName || ""}
                     required
                     className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
                   />

@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import Http from "../../../Helper/Http";
+import axios from "axios";
 export const userLogin = createAsyncThunk(
   "user/login",
   async ({ email, password }, { rejectWithValue }) => {
@@ -20,7 +21,13 @@ export const userRegister = createAsyncThunk(
   "user/register",
   async (userData, { rejectWithValue }) => {
     try {
-      const data = await Http.post("/user/create", userData);
+      const config = {
+        headers: {
+          "Content-Type": "application/json", // Set the Content-Type header to JSON
+        },
+      };
+      const data = await axios.post(`/auth/register`, userData, config);
+      console.log("data.data", data.data);
       return data.data;
     } catch (error) {
       console.log(error);

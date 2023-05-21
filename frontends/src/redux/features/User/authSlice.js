@@ -1,10 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { userLogin, userRegister, userAll, LoggedInUser } from "./authAction";
+import {
+  userLogin,
+  userRegister,
+  userAll,
+  LoggedInUser,
+  editUserById,
+  getUserById,
+} from "./authAction";
 import jwt from "jwt-decode";
 // initialize userToken from local storage
-// const userToken = localStorage.getItem("userToken")
-//   ? localStorage.getItem("userToken")
-//   : null;
+const userToken = localStorage.getItem("userToken")
+  ? localStorage.getItem("userToken")
+  : null;
 const initialState = {
   loading: false,
   userInfo: null,
