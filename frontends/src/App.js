@@ -13,7 +13,7 @@ import BikeRentSection from "./components/BikeRentSection";
 
 function App() {
   return (
-    <>
+    <div className='bg-slate-50'>
       <Navbar />
       <Routes>
         <Route path='/' element={<Home />} />
@@ -26,7 +26,7 @@ function App() {
         <Route path='*' element={<Unauthorized />} />
       </Routes>
       <Footer />
-    </>
+    </div>
   );
 }
 
