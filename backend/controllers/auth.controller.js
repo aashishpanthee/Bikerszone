@@ -33,7 +33,6 @@ const register = async (req, res) => {
     });
   }
   const salt = await bcrypt.genSalt(10);
-  J;
 
   // console.log(typeof (req.body.password));
   // console.log(password);
