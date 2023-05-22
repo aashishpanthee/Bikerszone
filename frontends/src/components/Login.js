@@ -5,14 +5,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Spinner from "../Helper/Spinner";
 import Error from "../Helper/Error";
+import { userLogin } from "../redux/features/User/authAction";
+import { clearFields } from "../redux/features/User/authSlice";
 
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // const { loading, userInfo, error } = useSelector((state) => state.auth)
-  const onSubmit = (event) => {
+  const { loading, userInfo, error } = useSelector((state) => state.auth);
+  const onSubmit = async (event) => {
     if (!email || !password) {
       toast.error("invalid credintals");
     }
@@ -20,14 +22,15 @@ const Login = () => {
       email: email,
       password: password,
     };
-    // dispatch(userLogin(data))
+    await dispatch(userLogin(data));
+    await dispatch(clearFields());
   };
   // redirect authenticated user to profile screen
-  /*   useEffect(() => {
+  useEffect(() => {
     if (userInfo) {
       window.location.href = "/";
     }
-  }, [navigate, userInfo]); */
+  }, [navigate, userInfo]);
   return (
     <div className='flex flex-col justify-center h-screen px-6 py-12 lg:px-8 bg-slate-50'>
       <div className='mt-5 sm:mx-auto sm:w-full sm:max-w-sm'>
@@ -44,7 +47,7 @@ const Login = () => {
       </div>
 
       <div className='mt-5 sm:mx-auto sm:w-full sm:max-w-sm'>
-        <form className='space-y-6' action='#' method='POST'>
+        <form className='space-y-6'>
           <div>
             <label
               for='email'
@@ -91,16 +94,15 @@ const Login = () => {
               </a>
             </div>
           </div>
-          {/* {error && <Error>{error}</Error>} */}
+          {error && <Error>{error}</Error>}
           <div>
             <button
               type='submit'
               className='flex justify-center w-full px-3 py-1.5 text-sm font-semibold leading-6 text-white rounded-md shadow-sm bg-orange focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
               onClick={(event) => onSubmit(event)}
-              // disabled={loading}
+              disabled={loading}
             >
-              Login
-              {/* {loading ? <Spinner /> : "Login"} */}
+              {loading ? <Spinner /> : "Login"}
             </button>
           </div>
         </form>

@@ -3,10 +3,16 @@ import Http from "../../../Helper/Http";
 import axios from "axios";
 export const userLogin = createAsyncThunk(
   "user/login",
-  async ({ email, password }, { rejectWithValue }) => {
+  async (datas, { rejectWithValue }) => {
     try {
-      const data = await Http.post("/user/login", { email, password });
+      const config = {
+        headers: {
+          "Content-Type": "application/json", // Set the Content-Type header to JSON
+        },
+      };
+      const data = await axios.post("/login", datas, config);
       localStorage.setItem("userToken", data.data.token);
+      console.log("loggin successfull", data.data);
       return data.data;
     } catch (error) {
       if (error.response && error.response.data.message) {
@@ -26,7 +32,7 @@ export const userRegister = createAsyncThunk(
           "Content-Type": "application/json", // Set the Content-Type header to JSON
         },
       };
-      const data = await axios.post(`/auth/register`, userData, config);
+      const data = await axios.post(`/signup`, userData, config);
       console.log("data.data", data.data);
       return data.data;
     } catch (error) {
