@@ -5,22 +5,25 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
+import { store } from "../src/redux/store";
+import { Provider } from "react-redux";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
+  <Provider store={store}>
     <BrowserRouter>
       <App />
       <Toaster
         position='top-right'
         toastOptions={{
+          duration: 4000,
           style: {
             borderRadius: "8px",
           },
         }}
       />
     </BrowserRouter>
-  </React.StrictMode>
+  </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function

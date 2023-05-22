@@ -1,0 +1,105 @@
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import Http from "../../../Helper/Http";
+import axios from "axios";
+export const userLogin = createAsyncThunk(
+  "user/login",
+  async ({ email, password }, { rejectWithValue }) => {
+    try {
+      const data = await Http.post("/user/login", { email, password });
+      localStorage.setItem("userToken", data.data.token);
+      return data.data;
+    } catch (error) {
+      if (error.response && error.response.data.message) {
+        return rejectWithValue(error.response.data.message);
+      } else {
+        return rejectWithValue(error.message);
+      }
+    }
+  }
+);
+export const userRegister = createAsyncThunk(
+  "user/register",
+  async (userData, { rejectWithValue }) => {
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json", // Set the Content-Type header to JSON
+        },
+      };
+      const data = await axios.post(`/auth/register`, userData, config);
+      console.log("data.data", data.data);
+      return data.data;
+    } catch (error) {
+      console.log(error);
+      if (error.response && error.response.data.errors) {
+        return rejectWithValue(error.response.data.errors[0].msg);
+      } else {
+        return rejectWithValue(error.message);
+      }
+    }
+  }
+);
+export const userAll = createAsyncThunk(
+  "user/all",
+  async ({ page, filter }, { rejectWithValue }) => {
+    try {
+      let url = `/user?page=${page}`;
+      if (filter) {
+        url += `&filter=${filter}`;
+      }
+      const data = await Http.get(url);
+      return data.data.data;
+    } catch (error) {
+      if (error.response && error.response.data.message) {
+        return rejectWithValue(error.response.data.message);
+      } else {
+        return rejectWithValue(error.message);
+      }
+    }
+  }
+);
+export const LoggedInUser = createAsyncThunk(
+  "user/me",
+  async (alluser, { rejectWithValue }) => {
+    try {
+      const data = await Http.get("/user/me");
+      return data.data.data;
+    } catch (error) {
+      if (error.response && error.response.data.message) {
+        return rejectWithValue(error.response.data.message);
+      } else {
+        return rejectWithValue(error.message);
+      }
+    }
+  }
+);
+export const getUserById = createAsyncThunk(
+  "user/id",
+  async (id, { rejectWithValue }) => {
+    try {
+      const data = await Http.get(`/user/userById/${id}`);
+      return data.data;
+    } catch (error) {
+      if (error.response && error.response.data.message) {
+        return rejectWithValue(error.response.data.message);
+      } else {
+        return rejectWithValue(error.message);
+      }
+    }
+  }
+);
+export const editUserById = createAsyncThunk(
+  "user/edit",
+  async (item, { rejectWithValue }) => {
+    try {
+      const data = await Http.put(`/user/${item.id}`, item.formdata);
+      return data.data;
+    } catch (error) {
+      if (error.response && error.response.data.message) {
+        return rejectWithValue(error.response.data.message);
+      } else {
+        return rejectWithValue(error.message);
+      }
+    }
+  }
+);
