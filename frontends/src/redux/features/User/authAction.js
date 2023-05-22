@@ -26,7 +26,7 @@ export const userRegister = createAsyncThunk(
           "Content-Type": "application/json", // Set the Content-Type header to JSON
         },
       };
-      const data = await axios.post(`/auth/register`, userData, config);
+      const data = await axios.post(`/signup`, userData, config);
       console.log("data.data", data.data);
       return data.data;
     } catch (error) {
