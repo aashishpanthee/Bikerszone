@@ -3,6 +3,8 @@ const dotenv = require("dotenv");
 const bcrypt = require("bcryptjs");
 const fs = require("fs");
 const jwt = require("jsonwebtoken");
+const verifyMiddleware = require("../middleware/verifacation")
+
 
 dotenv.config();
 
@@ -79,6 +81,29 @@ const login = ((req, res) => {
   });
 });
 
+const profile = ((req, res) => {
+  let userId = req.userData.id;
+
+  model.users.findOne({ where: { id: userId },
+    attributes:["id","name","email"] 
+  }).then((result) => {
+    if (result) {
+      return res.status(200).json({
+        data: result,
+      });
+    } else {
+      res.status(401).json({
+        message: "No user found",
+      });
+    }
+  })  .catch((error) => {
+    res.status(500).json({
+      messege: "Something went wrong!!",
+      error,
+    });
+  });;
+});
+
   module.exports= {
-    signUp,login
+    signUp,login,profile
   }
