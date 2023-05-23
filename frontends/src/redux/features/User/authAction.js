@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import Http from "../../../Helper/Http";
-import axios from "axios";
+import Axios from "axios";
 export const userLogin = createAsyncThunk(
   "user/login",
   async (datas, { rejectWithValue }) => {
@@ -10,7 +10,7 @@ export const userLogin = createAsyncThunk(
           "Content-Type": "application/json", // Set the Content-Type header to JSON
         },
       };
-      const data = await axios.post("/login", datas, config);
+      const data = await Axios.post("/login", datas, config);
       localStorage.setItem("userToken", data.data.token);
       console.log("loggin successfull", data.data);
       return data.data;
@@ -32,8 +32,7 @@ export const userRegister = createAsyncThunk(
           "Content-Type": "application/json", // Set the Content-Type header to JSON
         },
       };
-      const data = await axios.post(`/signup`, userData, config);
-      console.log("data.data", data.data);
+      const data = await Axios.post(`/signup`, userData, config);
       return data.data;
     } catch (error) {
       console.log(error);
@@ -68,7 +67,7 @@ export const LoggedInUser = createAsyncThunk(
   "user/me",
   async (alluser, { rejectWithValue }) => {
     try {
-      const data = await Http.get("/user/me");
+      const data = await Http.get("/me");
       return data.data.data;
     } catch (error) {
       if (error.response && error.response.data.message) {

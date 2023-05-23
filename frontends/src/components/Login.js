@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import Spinner from "../Helper/Spinner";
 import Error from "../Helper/Error";
 import { userLogin } from "../redux/features/User/authAction";
@@ -10,7 +9,6 @@ import { clearFields } from "../redux/features/User/authSlice";
 
 const Login = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { loading, userInfo, error } = useSelector((state) => state.auth);
@@ -30,7 +28,7 @@ const Login = () => {
     if (userInfo) {
       window.location.href = "/";
     }
-  }, [navigate, userInfo]);
+  }, [userInfo]);
   return (
     <div className='flex flex-col justify-center h-screen px-6 py-12 lg:px-8 bg-slate-50'>
       <div className='mt-5 sm:mx-auto sm:w-full sm:max-w-sm'>
