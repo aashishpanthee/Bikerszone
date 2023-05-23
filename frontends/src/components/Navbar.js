@@ -2,15 +2,15 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
 import jwtDecode from "jwt-decode";
-import { Fragment, useRef } from "react";
+import { Fragment } from "react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
-import { clearFields } from "../redux/features/User/authSlice";
+import { logout } from "../redux/features/User/authSlice";
 
 const navigation = [
-  { name: "Home", href: "#" },
+  { name: "Home", href: "/" },
   { name: "Rent Bikes", href: "/bikerentsection" },
 ];
 
@@ -19,24 +19,16 @@ function classNames(...classes) {
 }
 
 export default function Navbar() {
-  const navigate = useNavigate();
-
   const dispatch = useDispatch();
-  const { loading, userInfo, error } = useSelector((state) => state.auth);
-  const usertokn = localStorage.getItem("userToken")
+  const usertoken = localStorage.getItem("userToken")
     ? localStorage.getItem("userToken")
     : null;
-  const data = usertokn ? jwtDecode(usertokn) : null;
-  console.log(data);
+  const userData = usertoken ? jwtDecode(usertoken) : null;
   const handleLogout = () => {
-    localStorage.removeItem("userToken");
+    dispatch(logout());
     window.location.href = "/";
   };
-  // useEffect(() => {
-  //   if (!usertokn) {
-  //     window.location.href = "/";
-  //   }
-  // }, [usertokn]);
+
   return (
     <Disclosure as='nav' className='bg-slate-50'>
       {({ open }) => (
@@ -83,14 +75,14 @@ export default function Navbar() {
                   </div>
                 </div>
               </div>
-              {usertokn !== undefined && usertokn !== null ? (
+              {userData !== undefined && userData !== null ? (
                 <div className='text-right'>
-                  <Menu as='div' className=' text-left'>
+                  <Menu as='div' className='text-left '>
                     <div>
-                      <Menu.Button className='inline-flex w-full justify-center rounded-md px-4 py-2 font-medium text-base text-slate-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75'>
-                        {data.user}
+                      <Menu.Button className='inline-flex justify-center w-full px-4 py-2 text-base font-medium rounded-md text-slate-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75'>
+                        {userData.name}
                         <ChevronDownIcon
-                          className='ml-2 -mr-1 h-5 w-5 text-slate-900 '
+                          className='w-5 h-5 ml-2 -mr-1 text-slate-900 '
                           aria-hidden='true'
                         />
                       </Menu.Button>
@@ -104,7 +96,7 @@ export default function Navbar() {
                       leaveFrom='transform opacity-100 scale-100'
                       leaveTo='transform opacity-0 scale-95'
                     >
-                      <Menu.Items className='absolute right-0 mt-2 w-48 origin-top-right divide-y divide-gray-300 rounded-md bg-gray-50 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
+                      <Menu.Items className='absolute right-0 w-48 mt-2 origin-top-right divide-y divide-gray-300 rounded-md shadow-lg bg-gray-50 ring-1 ring-black ring-opacity-5 focus:outline-none'>
                         <div className='px-1 py-1 '>
                           <Menu.Item>
                             {({ active }) => (
