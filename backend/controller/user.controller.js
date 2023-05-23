@@ -3,10 +3,13 @@ const dotenv = require("dotenv");
 const bcrypt = require("bcryptjs");
 const fs = require("fs");
 const jwt = require("jsonwebtoken");
-const verifyMiddleware = require("../middleware/verifacation")
+const verifyMiddleware = require("../middleware/verifacation");
+const { Console } = require("console");
 
 
 dotenv.config();
+
+console.log("_____")
 
 const signUp = (req, res) => {
   const newUser = {
