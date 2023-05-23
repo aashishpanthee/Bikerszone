@@ -15,6 +15,7 @@ export const userLogin = createAsyncThunk(
       console.log("loggin successfull", data.data);
       return data.data;
     } catch (error) {
+      console.log(error);
       if (error.response && error.response.data.message) {
         return rejectWithValue(error.response.data.message);
       } else {

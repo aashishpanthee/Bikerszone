@@ -24,6 +24,7 @@ export default function Navbar() {
     ? localStorage.getItem("userToken")
     : null;
   const userData = usertoken ? jwtDecode(usertoken) : null;
+  console.log(userData, "usernavbar");
   const handleLogout = () => {
     dispatch(logout());
     window.location.href = "/";

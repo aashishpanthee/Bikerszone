@@ -70,7 +70,7 @@ const authSlice = createSlice({
       state.loading = false;
       state.userInfo = payload;
 
-      if (payload.role == "Admin") {
+      if (payload.isAdmin === "admin") {
         state.isAdmin = true;
       } else {
         state.isUser = true;

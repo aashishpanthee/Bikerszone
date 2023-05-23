@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import WhyUs from "./WhyUs";
 import Categories from "./Categories";
 import Testimonial from "./Testimonial";
