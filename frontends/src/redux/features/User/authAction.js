@@ -33,7 +33,6 @@ export const userRegister = createAsyncThunk(
         },
       };
       const data = await axios.post(`/signup`, userData, config);
-      console.log("data.data", data.data);
       return data.data;
     } catch (error) {
       console.log(error);

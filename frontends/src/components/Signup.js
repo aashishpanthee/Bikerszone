@@ -39,7 +39,6 @@ const Signup = () => {
         }}
         validationSchema={ValidateUser}
         onSubmit={async (values, actions) => {
-          console.log(values);
           await dispatch(userRegister(values));
           await dispatch(clearFields());
         }}
