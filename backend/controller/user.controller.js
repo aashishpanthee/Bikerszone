@@ -40,36 +40,48 @@ const signUp = ((req, res) => {
 )
   
 //user login
-const login = (req, res) => {
-    model.users
-      .findOne({ where: { email: req.body.email } })
-      .then((user) => {
-        const verify = jwt.sign(
-          {
-            user: user.name,
-            id: user.id,
-          },
-          process.env.VERIFY_SEC,
-          { expiresIn: "7d" },
-  
-          (err, token) => {
-            res.status(200).json({
-              messege: "Login succcessful!",
-              token: token,
-             
-            });
-            console.log(token)
-          }
-        );
-      })
-      .catch((error) => {
-        res.status(500).json({
-          messege: "Something went wrong!!",
-          error,
-        });
+const login = ((req, res) => {
+  model.users.findOne({ where: { email: req.body.email } }).then((user) => {
+    if (user) {
+      bcrypt.compare(req.body.password, user.password, (err, result) => {
+        if (result) {
+          const verify = jwt.sign(
+            {
+              name: user.name,
+              id: user.id,
+              email: user.email,
+              // role: user.role
+            },
+            process.env.VERIFY_SEC,
+            { expiresIn: "7d" },
+
+            (err, token) => {
+              res.status(200).json({
+                message: "Login succcessful!",
+                token: token,
+              });
+            }
+          );
+        }
+        else{
+          res.status(401).json({
+            message: "Invalid Credintals!",
+          });
+        }
       });
-  };
-  
+    } else {
+      res.status(401).json({
+        message: "Invalid Credintals!",
+      });
+    }
+  })
+  .catch((error) => {
+    res.status(500).json({
+      messege: "Something went wrong!!",
+      error,
+    });
+  });
+});
 
   module.exports= {
     signUp,login
