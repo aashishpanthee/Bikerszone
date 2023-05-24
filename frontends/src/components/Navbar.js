@@ -97,15 +97,16 @@ export default function Navbar() {
                         <div className='px-1 py-1 '>
                           <Menu.Item>
                             {({ active }) => (
-                              <button
+                              <Link
+                                to='/dashboard'
                                 className={`${
                                   active
                                     ? "bg-violet-500 text-white"
                                     : "text-gray-900"
                                 } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                               >
-                                Edit Profile
-                              </button>
+                                Dashboard
+                              </Link>
                             )}
                           </Menu.Item>
                           <Menu.Item>

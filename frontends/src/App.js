@@ -7,8 +7,6 @@ import Unauthorized from "./Helper/Unauthorized";
 import Categories from "./components/Categories";
 import Contact from "./components/Contact";
 import Testimonial from "./components/Testimonial";
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
 import BikeRentSection from "./components/BikeRentSection";
 import Dashboard from "./dashboard/Dashboard";
 import ProtectedRoute from "./Helper/ProtectedRoute";
@@ -16,7 +14,6 @@ import ProtectedRoute from "./Helper/ProtectedRoute";
 function App() {
   return (
     <div className='bg-slate-50'>
-      <Navbar />
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/login' element={<Login />} />
@@ -26,7 +23,7 @@ function App() {
         <Route path='/reviews' element={<Testimonial />} />
         <Route path='/contact' element={<Contact />} />
         <Route
-          path='/dashboard'
+          path='/dashboard/*'
           element={
             <ProtectedRoute>
               <Dashboard />
@@ -35,7 +32,6 @@ function App() {
         />
         <Route path='*' element={<Unauthorized />} />
       </Routes>
-      <Footer />
     </div>
   );
 }
