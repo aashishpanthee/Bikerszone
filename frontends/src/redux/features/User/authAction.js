@@ -69,6 +69,7 @@ export const LoggedInUser = createAsyncThunk(
   async (alluser, { rejectWithValue }) => {
     try {
       const data = await Http.get("/me");
+
       return data.data.data;
     } catch (error) {
       if (error.response && error.response.data.message) {

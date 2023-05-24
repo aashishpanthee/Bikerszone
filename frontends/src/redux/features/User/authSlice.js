@@ -12,9 +12,10 @@ import jwt from "jwt-decode";
 const userToken = localStorage.getItem("userToken")
   ? localStorage.getItem("userToken")
   : null;
+const userInfo = userToken ? jwt(userToken) : null;
 const initialState = {
   loading: false,
-  userInfo: null,
+  userInfo,
   userToken,
   error: null,
   success: false,
@@ -69,12 +70,6 @@ const authSlice = createSlice({
     [LoggedInUser.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.userInfo = payload;
-
-      if (payload.isAdmin === "admin") {
-        state.isAdmin = true;
-      } else {
-        state.isUser = true;
-      }
     },
     [LoggedInUser.rejected]: (state, { payload }) => {
       state.loading = false;

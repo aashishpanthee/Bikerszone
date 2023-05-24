@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
-import jwtDecode from "jwt-decode";
 import { Fragment } from "react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { logout } from "../redux/features/User/authSlice";
@@ -20,14 +19,11 @@ function classNames(...classes) {
 
 export default function Navbar() {
   const dispatch = useDispatch();
-  const usertoken = localStorage.getItem("userToken")
-    ? localStorage.getItem("userToken")
-    : null;
-  const userData = usertoken ? jwtDecode(usertoken) : null;
-  console.log(userData, "usernavbar");
+  const navigate = useNavigate();
+  const { loading, userInfo, error } = useSelector((state) => state.auth);
   const handleLogout = () => {
     dispatch(logout());
-    window.location.href = "/";
+    navigate("/");
   };
 
   return (
@@ -76,12 +72,12 @@ export default function Navbar() {
                   </div>
                 </div>
               </div>
-              {userData !== undefined && userData !== null ? (
+              {userInfo !== undefined && userInfo !== null ? (
                 <div className='text-right'>
                   <Menu as='div' className='text-left '>
                     <div>
                       <Menu.Button className='inline-flex justify-center w-full px-4 py-2 text-base font-medium rounded-md text-slate-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75'>
-                        {userData.name}
+                        {userInfo.name}
                         <ChevronDownIcon
                           className='w-5 h-5 ml-2 -mr-1 text-slate-900 '
                           aria-hidden='true'
