@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import Spinner from "../Helper/Spinner";
@@ -9,6 +9,7 @@ import { clearFields } from "../redux/features/User/authSlice";
 
 const Login = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { loading, userInfo, error } = useSelector((state) => state.auth);
@@ -26,7 +27,7 @@ const Login = () => {
   // redirect authenticated user to profile screen
   useEffect(() => {
     if (userInfo) {
-      window.location.href = "/";
+      navigate("/");
     }
   }, [userInfo]);
   return (

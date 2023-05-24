@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Routes, Navigate } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Home from "./components/Home";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
@@ -10,6 +10,8 @@ import Testimonial from "./components/Testimonial";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import BikeRentSection from "./components/BikeRentSection";
+import Dashboard from "./dashboard/Dashboard";
+import ProtectedRoute from "./Helper/ProtectedRoute";
 
 function App() {
   return (
@@ -23,6 +25,14 @@ function App() {
         <Route path='/bikerentsection' element={<BikeRentSection />} />
         <Route path='/reviews' element={<Testimonial />} />
         <Route path='/contact' element={<Contact />} />
+        <Route
+          path='/dashboard'
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
         <Route path='*' element={<Unauthorized />} />
       </Routes>
       <Footer />
