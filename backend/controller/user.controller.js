@@ -89,7 +89,10 @@ const profile = (req, res) => {
   let userId = req.userData.id;
 
   model.users
-    .findOne({ where: { id: userId }, attributes: ["id", "name", "email"] })
+    .findOne({
+      where: { id: userId },
+      attributes: ["id", "name", "email", "isAdmin"],
+    })
     .then((result) => {
       if (result) {
         return res.status(200).json({
