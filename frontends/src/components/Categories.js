@@ -1,20 +1,24 @@
 import React from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
+import { Link } from "react-router-dom";
 
 const Categories = () => {
   const array = [
     {
       name: "Economuter bikes",
       images: "../images/economuter/pulsar.png",
+      href: "/bikerentsection",
     },
     {
       name: "Sport bikes",
       images: "../images/sports/sport2.png",
+      href: "/bikerentsection",
     },
     {
       name: "Scooter",
       images: "../images/scooter/vespaa.png",
+      href: "/bikerentsection",
     },
   ];
   return (
@@ -42,7 +46,7 @@ const Categories = () => {
                 <div class='rounded-lg h-64 overflow-hidden'>
                   <LazyLoadImage
                     alt='content'
-                    className='img-lazy object-cover object-center h-full w-full '
+                    className='object-cover object-center w-full h-full img-lazy '
                     src={array.images}
                     placeholderSrc='https://reactnativecode.com/wp-content/uploads/2018/02/Default_Image_Thumbnail.png'
                     effect='blur' // opacity | black-and-white
@@ -52,7 +56,10 @@ const Categories = () => {
                   {array.name}
                 </h2>
 
-                <a class='text-indigo-500 inline-flex items-center mt-1'>
+                <Link
+                  class='text-indigo-500 inline-flex items-center mt-1'
+                  to={array.href}
+                >
                   Enquire Now
                   <svg
                     fill='none'
@@ -65,7 +72,7 @@ const Categories = () => {
                   >
                     <path d='M5 12h14M12 5l7 7-7 7'></path>
                   </svg>
-                </a>
+                </Link>
               </div>
             );
           })}

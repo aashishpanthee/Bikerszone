@@ -1,6 +1,7 @@
 import React from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
+import { Link } from "react-router-dom";
 
 const Main = () => {
   return (
@@ -11,13 +12,16 @@ const Main = () => {
       <LazyLoadImage
         src='../images/Home.png'
         alt=''
-        className='img-lazy h-full'
+        className='h-full img-lazy'
         placeholderSrc='https://reactnativecode.com/wp-content/uploads/2018/02/Default_Image_Thumbnail.png'
         effect='blur'
       />
-      <button className='px-2 py-1 mt-2 text-white rounded bg-orange sm:font-semibold sm:py-2 sm:px-4 hover:bg-black sm:mt-4'>
+      <Link
+        className='px-2 py-1 mt-2 text-white rounded bg-orange sm:font-semibold sm:py-2 sm:px-4 hover:bg-black sm:mt-4'
+        to='/bikerentsection'
+      >
         Bike Showcase
-      </button>
+      </Link>
     </section>
   );
 };
