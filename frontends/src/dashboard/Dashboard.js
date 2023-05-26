@@ -6,6 +6,8 @@ import Dashboardnavbar from "./navbar/Dashboardnavbar";
 import Headerstats from "./components/Headerstats";
 import User from "./sidebar/User/User";
 import Bike from "./sidebar/Bikes/Bike";
+import AddBike from "./sidebar/Bikes/AddBike";
+import DashboardHome from "./DashboardHome";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -20,8 +22,10 @@ const Dashboard = () => {
           <Headerstats />
           <div className='w-full px-4 mx-auto -m-24 md:px-10'>
             <Routes>
+              <Route path='/' element={<DashboardHome />} />
               <Route path='/users' element={<User />} />
               <Route path='/bikes' element={<Bike />} />
+              <Route path='/bikes/add' element={<AddBike />} />
             </Routes>
             {/*  <Routes>
           <Route

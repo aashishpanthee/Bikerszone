@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { Formik, ErrorMessage } from "formik";
-import { ValidateService } from "../../Common/Validation";
-import AddEditWrapper from "../../Common/AddEditWrapper";
+import { ValidateBikeAdd } from "../../../common/Validation";
+import AddEditWrapper from "../../common/AddEditWrapper";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import Spinner from "../../Helper/Spinner";
-import { serviceCategory } from "../../../redux/features/Category/categoryActions";
+// import Spinner from "../../../Helper/Spinner";
+/* import { serviceCategory } from "../../../redux/features/Category/categoryActions";
 import { addService } from "../../../redux/features/Service/serviceActions";
-import { clearFields } from "../../../redux/features/Service/ServiceSlice";
+import { clearFields } from "../../../redux/features/Service/ServiceSlice"; */
 
 const AddBike = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    dispatch(serviceCategory());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(serviceCategory());
+  // }, []);
 
   const [selectedImage, setSelectedImage] = useState();
 
@@ -23,15 +23,15 @@ const AddBike = () => {
     setFieldValue("image", event.target.files[0]);
     setSelectedImage(URL.createObjectURL(event.target.files[0]));
   };
-
+  /* 
   const { loading, error, success } = useSelector((state) => state.service);
-  const { objectsWithEmptyChild } = useSelector((state) => state.category);
+  const { objectsWithEmptyChild } = useSelector((state) => state.category); */
 
-  useEffect(() => {
-    if (success) {
-      navigate(-1);
-    }
-  }, [success]);
+  // useEffect(() => {
+  //   if (success) {
+  //     navigate(-1);
+  //   }
+  // }, [success]);
 
   const handleBack = async () => {
     navigate(-1);
@@ -39,34 +39,35 @@ const AddBike = () => {
 
   return (
     <AddEditWrapper
-      title='service'
-      error={error}
+      title='Bikes'
+      // error={error}
       method='create'
-      success={success}
+      // success={success}
       handleBack={handleBack}
       backlink='/admin/category'
     >
       <Formik
         initialValues={{
-          name: "",
-          slug: "",
-          categoryId: "",
+          bikeName: "",
+          bikeNumber: "",
+          price: "",
         }}
-        validationSchema={ValidateService}
+        validationSchema={ValidateBikeAdd}
         onSubmit={async (values) => {
           let formdata = new FormData();
-          formdata.append("name", values.name);
-          formdata.append("slug", values.slug);
-          formdata.append("categoryId", values.categoryId);
+          formdata.append("bikeName", values.bikeName);
+          formdata.append("bikenumber", values.bikeNumber);
           formdata.append("image", values.image);
-          await dispatch(addService(formdata));
-          await dispatch(clearFields());
+          formdata.append("perdayprice", values.perdayprice);
+          console.log(values);
+          /*   await dispatch(addService(formdata));
+          await dispatch(clearFields()); */
         }}
       >
         {(props) => (
-          <form onSubmit={props.handleSubmit}>
-            <h6 className='mt-3 mb-6 text-sm font-bold uppercase text-blueGray-400'>
-              Service Information
+          <form onSubmit={props.handleSubmit} className='bg-transparent'>
+            <h6 className='mt-3 mb-6 text-sm font-bold text-black uppercase'>
+              Bike Information
             </h6>
             <div className='flex flex-wrap'>
               <div className='w-full px-4 lg:w-6/12'>
@@ -75,19 +76,19 @@ const AddBike = () => {
                     className='block mb-2 text-xs font-bold uppercase text-blueGray-600'
                     htmlFor='grid-password'
                   >
-                    Service Name
+                    Bike Name
                   </label>
                   <input
                     type='text'
                     className='w-full px-3 py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring'
-                    name='name'
+                    name='BikeName'
                     onChange={props.handleChange}
                     onBlur={props.handleBlur}
-                    value={props.values.name || ""}
+                    value={props.values.bikeName || ""}
                   />
                 </div>
                 <span className='text-red-500 error'>
-                  <ErrorMessage name='name' />
+                  <ErrorMessage name='bikeName' />
                 </span>
               </div>
               <div className='w-full px-4 lg:w-6/12'>
@@ -96,22 +97,43 @@ const AddBike = () => {
                     className='block mb-2 text-xs font-bold uppercase text-blueGray-600'
                     htmlFor='grid-password'
                   >
-                    Slug
+                    Bike Number
                   </label>
                   <input
                     type='text'
                     className='w-full px-3 py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring'
-                    name='slug'
+                    name='bikenumber'
                     onChange={props.handleChange}
                     onBlur={props.handleBlur}
-                    value={props.values.slug || ""}
+                    value={props.values.bikenumber || ""}
                   />
                 </div>
                 <span className='text-red-500 error'>
-                  <ErrorMessage name='slug' />
+                  <ErrorMessage name='bikenumber' />
                 </span>
               </div>
-              <div className='w-full px-3 py-3 lg:w-6/12'>
+              <div className='w-full px-4 mt-4 lg:w-6/12'>
+                <div className='relative w-full mb-3'>
+                  <label
+                    className='block mb-2 text-xs font-bold uppercase text-blueGray-600'
+                    htmlFor='grid-password'
+                  >
+                    Perday Price
+                  </label>
+                  <input
+                    type='number'
+                    className='w-full px-3 py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring'
+                    name='perdayprice'
+                    onChange={props.handleChange}
+                    onBlur={props.handleBlur}
+                    value={props.values.perdayprice || ""}
+                  />
+                </div>
+                <span className='text-red-500 error'>
+                  <ErrorMessage name='perdayprice' />
+                </span>
+              </div>
+              {/*  <div className='w-full px-3 py-3 lg:w-6/12'>
                 <div className='relative w-full mb-3'>
                   <label
                     className='block mb-2 text-xs font-bold uppercase text-blueGray-600'
@@ -141,7 +163,7 @@ const AddBike = () => {
                 <span className='text-red-500 error'>
                   <ErrorMessage name='categoryId' />
                 </span>
-              </div>
+              </div> */}
 
               <div className='w-full px-3 py-3 lg:w-3/12'>
                 <div className='relative w-full mb-3 '>
@@ -171,8 +193,7 @@ const AddBike = () => {
                   <div className='relative mt-4 border w-28 h-28'>
                     <img
                       src={selectedImage}
-                      height='80'
-                      width='80'
+                      className='object-cover w-full '
                       alt='Thumb'
                     />
                   </div>
@@ -182,7 +203,13 @@ const AddBike = () => {
             <hr className='mt-6 border-b-1 border-blueGray-300' />
             <div className='w-full px-3 py-3 lg:w-6/12'>
               <div className='relative w-full mt-3 mb-3'>
-                {loading ? (
+                <button
+                  type='submit'
+                  className='px-4 py-2 mr-1 text-xs font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-orange active:bg-lightBlue-600 hover:shadow-md focus:outline-none'
+                >
+                  Submit
+                </button>
+                {/*  {loading ? (
                   <Spinner />
                 ) : (
                   <button
@@ -191,7 +218,7 @@ const AddBike = () => {
                   >
                     Submit
                   </button>
-                )}
+                )} */}
               </div>
             </div>
           </form>
