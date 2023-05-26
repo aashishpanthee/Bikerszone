@@ -12,7 +12,7 @@ const AddEditWrapper = ({
   children,
 }) => {
   return (
-    <div className='relative flex flex-col w-full min-w-0 mb-6 break-words border-0 rounded-lg shadow-lg bg-blueGray-100'>
+    <div className='relative flex flex-col w-full min-w-0 mb-6 break-words border-0 rounded-lg shadow-lg bg-gray-50'>
       {error && toast.error(error)}
       {success && toast.success(`${title} ${method} sucessfully`)}
       <div className='px-6 py-6 mb-0 bg-white rounded-t'>
@@ -26,7 +26,9 @@ const AddEditWrapper = ({
           </button>
         </div>
       </div>
-      <div className='flex-auto px-4 py-10 pt-0 lg:px-10'>{children}</div>
+      <div className='flex-auto px-4 py-10 pt-0 bg-white lg:px-10'>
+        {children}
+      </div>
     </div>
   );
 };

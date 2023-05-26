@@ -1,31 +1,33 @@
-import React,{useState} from "react";
+import React from "react";
+import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 
-const TableWrapper = ({title,addlink,children}) => {
-
+const TableWrapper = ({
+  error = "",
+  success = "",
+  title = "",
+  addlink = "",
+  method = "",
+  handleBack,
+  children,
+}) => {
   return (
-    <div className="flex flex-wrap mt-4">
-      <div className="w-full px-4 mb-12">
-      <div className="relative flex flex-col min-w-0 mb-6 break-words border-0 rounded-lg max-w-64 shadow-lg  bg-blueGray-100">
-      <div className="px-2 py-2 mb-0 bg-white rounded-t">
-        <div className="flex flex-wrap items-center">
-          <div className="relative flex-1 flex-grow w-full max-w-full px-4">
-            <h3 className="text-lg font-semibold text-blueGray-700">
-              {title}
-            </h3>
-          </div>
-          {addlink ? (
-            <Link
+    <div className='relative flex flex-col w-full min-w-0 mb-6 break-words border-0 rounded-lg shadow-lg bg-gray-50'>
+      {error && toast.error(error)}
+      {success && toast.success(`${title} ${method} sucessfully`)}
+      <div className='px-6 py-6 mb-0 bg-white rounded-t'>
+        <div className='flex justify-between text-center'>
+          <h6 className='text-xl font-bold text-blueGray-700'>{title}</h6>
+          <Link
+            className='px-4 py-2 mr-1 text-xs font-bold text-white uppercase transition-all duration-150 ease-linear bg-blue-400 rounded shadow outline-none active:bg-red-600 hover:shadow-md focus:outline-none'
             to={addlink}
-            className="px-4 py-2 my-2 text-white bg-lightBlue-900 "
           >
-            Add
+            Add Bike
           </Link>
-          ):null}
         </div>
-            {children}
-            </div>
-            </div>
+      </div>
+      <div className='flex-auto px-4 py-10 pt-0 bg-white lg:px-10'>
+        {children}
       </div>
     </div>
   );

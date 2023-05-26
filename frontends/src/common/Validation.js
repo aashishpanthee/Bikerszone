@@ -9,3 +9,6 @@ export const ValidateUser = Yup.object().shape({
     .email("*Must be in email format")
     .required("*Email is required"),
 });
+export const ValidateBikeAdd = Yup.object().shape({
+  bikename: Yup.string().required("*BikeName is required"),
+});

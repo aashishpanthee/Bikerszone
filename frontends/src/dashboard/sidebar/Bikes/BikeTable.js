@@ -44,7 +44,7 @@ const BikeTable = ({ color }) => {
   return (
     <>
       {/* <SearchbarService filter={filter} setFilter={setFilter} page={page} /> */}
-      <table className='items-center w-full bg-transparent border-collapse'>
+      <table className='items-center w-full bg-white border-collapse'>
         <thead>
           <tr>
             <th
