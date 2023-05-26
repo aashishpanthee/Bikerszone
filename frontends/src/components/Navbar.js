@@ -11,6 +11,7 @@ import { logout } from "../redux/features/User/authSlice";
 const navigation = [
   { name: "Home", href: "/" },
   { name: "Rent Bikes", href: "/bikerentsection" },
+  { name: "Your Orders", href: "/order" },
 ];
 
 function classNames(...classes) {
@@ -94,7 +95,7 @@ export default function Navbar() {
                       leaveFrom='transform opacity-100 scale-100'
                       leaveTo='transform opacity-0 scale-95'
                     >
-                      <Menu.Items className='absolute right-0 w-48 mt-2 origin-top-right divide-y divide-gray-300 rounded-md shadow-lg bg-gray-50 ring-1 ring-black ring-opacity-5 focus:outline-none'>
+                      <Menu.Items className='absolute right-0 z-10 w-48 mt-2 origin-top-right divide-y divide-gray-300 rounded-md shadow-lg bg-gray-50 ring-1 ring-black ring-opacity-5 focus:outline-none'>
                         <div className='px-1 py-1 '>
                           <Menu.Item>
                             {({ active }) => (
@@ -102,7 +103,7 @@ export default function Navbar() {
                                 to='/dashboard'
                                 className={`${
                                   active
-                                    ? "bg-violet-500 text-white"
+                                    ? "bg-orange text-white"
                                     : "text-gray-900"
                                 } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                               >
@@ -112,15 +113,16 @@ export default function Navbar() {
                           </Menu.Item>
                           <Menu.Item>
                             {({ active }) => (
-                              <button
+                              <Link
+                                to='/order'
                                 className={`${
                                   active
-                                    ? "bg-violet-500 text-white"
+                                    ? "bg-orange text-white"
                                     : "text-gray-900"
                                 } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                               >
-                                Your Cart
-                              </button>
+                                Your orders
+                              </Link>
                             )}
                           </Menu.Item>
                         </div>
@@ -131,7 +133,7 @@ export default function Navbar() {
                                 onClick={handleLogout}
                                 className={`${
                                   active
-                                    ? "bg-violet-500 text-white"
+                                    ? "bg-orange text-white"
                                     : "text-gray-900"
                                 } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                               >

@@ -1,6 +1,7 @@
 import React from "react";
 import Navbar from "./Navbar";
 import { Link } from "react-router-dom";
+import Footer from "./Footer";
 
 const BikeRentSection = () => {
   const array = [
@@ -98,6 +99,7 @@ const BikeRentSection = () => {
           </div>
         </div>
       </section>
+      <Footer />
     </>
   );
 };

@@ -10,6 +10,7 @@ import Testimonial from "./components/Testimonial";
 import BikeRentSection from "./components/BikeRentSection";
 import Dashboard from "./dashboard/Dashboard";
 import ProtectedRoute from "./Helper/ProtectedRoute";
+import ProtectedElement from "./Helper/ProtectedElement";
 import Order from "./components/Order";
 
 function App() {
@@ -21,11 +22,17 @@ function App() {
         <Route path='/signup' element={<Signup />} />
         <Route path='/bikecategory' element={<Categories />} />
         <Route path='/bikerentsection' element={<BikeRentSection />} />
-        <Route path='/order' element={<Order />} />
         <Route path='/reviews' element={<Testimonial />} />
         <Route path='/contact' element={<Contact />} />
         <Route
-          path='/dashboard/*'
+          path='/order/*'
+          element={
+            <ProtectedElement>
+              <Order />
+            </ProtectedElement>
+          }
+        />
+        <Route
           element={
             <ProtectedRoute>
               <Dashboard />
