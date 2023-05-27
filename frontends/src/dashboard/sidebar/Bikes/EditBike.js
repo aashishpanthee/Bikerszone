@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { Formik, ErrorMessage } from "formik";
-import { ValidateService } from "../../Common/Validation";
-import AddEditWrapper from "../../Common/AddEditWrapper";
+import { ValidateBikeAdd } from "../../../common/Validation";
+import AddEditWrapper from "../../common/AddEditWrapper";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import Spinner from "../../Helper/Spinner";
+import Spinner from "../../../Helper/Spinner";
 import {
-  editServiceById,
-  getServiceById,
-} from "../../../redux/features/Service/serviceActions";
-import { clearFields } from "../../../redux/features/Service/ServiceSlice";
+  getBikeById,
+  editBikeById,
+} from "../../../redux/features/Bikes/bikeAction";
+import { clearFields } from "../../../redux/features/Bikes/bikeSlice";
 import { useParams } from "react-router-dom";
-const base_url = "http://localhost:5000/";
+const base_url = "http://localhost:8000/";
 
 const EditBike = () => {
   let { id } = useParams();
@@ -22,13 +22,12 @@ const EditBike = () => {
     setSelectedImage(URL.createObjectURL(event.target.files[0]));
   };
   const dispatch = useDispatch();
-  const { loading, error, success, serviceById } = useSelector(
-    (state) => state.service
+  const { loading, error, success, bikeById } = useSelector(
+    (state) => state.bike
   );
-  const { objectsWithEmptyChild } = useSelector((state) => state.category);
 
   useEffect(() => {
-    dispatch(getServiceById(id));
+    dispatch(getBikeById(id));
   }, [id]);
 
   useEffect(() => {
@@ -45,40 +44,41 @@ const EditBike = () => {
 
   return (
     <>
-      {serviceById ? (
+      {bikeById ? (
         <AddEditWrapper
-          title='service'
+          title='Bike'
           error={error}
           method='update'
           success={success}
           handleBack={handleBack}
-          backlink='/admin/category'
+          backlink='/dashboard/bikes'
         >
           <Formik
             initialValues={{
-              name: serviceById.name,
-              slug: serviceById.slug,
-              categoryId: serviceById.categoryId,
+              bikeName: bikeById.bikeName,
+              bikeNo: bikeById.bikeNo,
+              pricePerDay: bikeById.pricePerDay,
+              image: bikeById.image,
             }}
-            validationSchema={ValidateService}
+            validationSchema={ValidateBikeAdd}
             onSubmit={async (values) => {
               let formdata = new FormData();
-              formdata.append("name", values.name);
-              formdata.append("slug", values.slug);
-              formdata.append("categoryId", values.categoryId);
+              formdata.append("bikeName", values.bikeName);
+              formdata.append("bikeNo", values.bikeNo);
               formdata.append("image", values.image);
+              formdata.append("pricePerDay", parseInt(values.pricePerDay));
               let data = {
                 id: id,
                 formdata: formdata,
               };
-              await dispatch(editServiceById(data));
+              await dispatch(editBikeById(data));
               await dispatch(clearFields());
             }}
           >
             {(props) => (
               <form onSubmit={props.handleSubmit}>
                 <h6 className='mt-3 mb-6 text-sm font-bold uppercase text-blueGray-400'>
-                  Service Information
+                  Bike Information
                 </h6>
                 <div className='flex flex-wrap'>
                   <div className='w-full px-4 lg:w-6/12'>
@@ -87,19 +87,19 @@ const EditBike = () => {
                         className='block mb-2 text-xs font-bold uppercase text-blueGray-600'
                         htmlFor='grid-password'
                       >
-                        Service Name
+                        Bike Name
                       </label>
                       <input
                         type='text'
                         className='w-full px-3 py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring'
-                        name='name'
+                        name='bikeName'
                         onChange={props.handleChange}
                         onBlur={props.handleBlur}
-                        value={props.values.name || ""}
+                        value={props.values.bikeName || ""}
                       />
                     </div>
                     <span className='text-red-500 error'>
-                      <ErrorMessage name='name' />
+                      <ErrorMessage name='bikeName' />
                     </span>
                   </div>
                   <div className='w-full px-4 lg:w-6/12'>
@@ -108,52 +108,40 @@ const EditBike = () => {
                         className='block mb-2 text-xs font-bold uppercase text-blueGray-600'
                         htmlFor='grid-password'
                       >
-                        Slug
+                        Bike Number
                       </label>
                       <input
                         type='text'
                         className='w-full px-3 py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring'
-                        name='slug'
+                        name='bikeNo'
                         onChange={props.handleChange}
                         onBlur={props.handleBlur}
-                        value={props.values.slug || ""}
+                        value={props.values.bikeNo || ""}
                       />
                     </div>
                     <span className='text-red-500 error'>
-                      <ErrorMessage name='slug' />
+                      <ErrorMessage name='bikeNo' />
                     </span>
                   </div>
-                  <div className='w-full px-3 py-3 lg:w-6/12'>
+                  <div className='w-full px-4 mt-4 lg:w-6/12'>
                     <div className='relative w-full mb-3'>
                       <label
                         className='block mb-2 text-xs font-bold uppercase text-blueGray-600'
                         htmlFor='grid-password'
                       >
-                        Category
+                        Price Per Day
                       </label>
-                      <select
-                        className='w-full px-3 py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-blueGray-300 text-blueGray-600 focus:outline-none'
-                        name='categoryId'
+                      <input
+                        type='string'
+                        className='w-full px-3 py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring'
+                        name='pricePerDay'
                         onChange={props.handleChange}
                         onBlur={props.handleBlur}
-                        value={props.values.categoryId}
-                        autoComplete='off'
-                      >
-                        <option>Select</option>
-                        {objectsWithEmptyChild.length !== 0 &&
-                          objectsWithEmptyChild.map((item, i) => {
-                            return (
-                              <>
-                                <option value={item.id}>
-                                  {item.CategoryName}
-                                </option>
-                              </>
-                            );
-                          })}
-                      </select>
+                        value={props.values.pricePerDay || ""}
+                      />
                     </div>
                     <span className='text-red-500 error'>
-                      <ErrorMessage name='categoryId' />
+                      <ErrorMessage name='pricePerDay' />
                     </span>
                   </div>
 
@@ -177,7 +165,7 @@ const EditBike = () => {
                       />
                     </div>
                     <span className='text-red-500 error'>
-                      <ErrorMessage name='fullName' />
+                      <ErrorMessage name='image' />
                     </span>
                   </div>
                   <div className='px-4 lg:w-3/12'>
@@ -192,7 +180,7 @@ const EditBike = () => {
                       </div>
                     ) : (
                       <img
-                        src={`${base_url}${serviceById.image}`}
+                        src={`${base_url}${bikeById.image}`}
                         height='80'
                         width='80'
                         alt='no-image-found'
@@ -208,7 +196,7 @@ const EditBike = () => {
                     ) : (
                       <button
                         type='submit'
-                        className='px-4 py-2 mr-1 text-xs font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-lightBlue-500 active:bg-lightBlue-600 hover:shadow-md focus:outline-none'
+                        className='px-4 py-2 mr-1 text-xs font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-orange active:bg-lightBlue-600 hover:shadow-md focus:outline-none'
                       >
                         Submit
                       </button>

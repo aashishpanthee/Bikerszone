@@ -62,7 +62,7 @@ const bikeSlice = createSlice({
     },
     [getBikeById.fulfilled]: (state, { payload }) => {
       state.loading = false;
-      state.serviceById = payload;
+      state.bikeById = payload;
     },
     [getBikeById.rejected]: (state, { payload }) => {
       state.loading = false;
@@ -102,3 +102,5 @@ const bikeSlice = createSlice({
     },
   },
 });
+export const { clearFields } = bikeSlice.actions;
+export default bikeSlice.reducer;

@@ -4,34 +4,27 @@ import { ValidateBikeAdd } from "../../../common/Validation";
 import AddEditWrapper from "../../common/AddEditWrapper";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-// import Spinner from "../../../Helper/Spinner";
-/* import { serviceCategory } from "../../../redux/features/Category/categoryActions";
-import { addService } from "../../../redux/features/Service/serviceActions";
-import { clearFields } from "../../../redux/features/Service/ServiceSlice"; */
+import { addBike } from "../../../redux/features/Bikes/bikeAction";
+import { clearFields } from "../../../redux/features/Bikes/bikeSlice";
+import Spinner from "../../../Helper/Spinner";
 
 const AddBike = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   dispatch(serviceCategory());
-  // }, []);
-
   const [selectedImage, setSelectedImage] = useState();
 
   const onImageChange = (event, setFieldValue) => {
     setFieldValue("image", event.target.files[0]);
     setSelectedImage(URL.createObjectURL(event.target.files[0]));
   };
-  /* 
-  const { loading, error, success } = useSelector((state) => state.service);
-  const { objectsWithEmptyChild } = useSelector((state) => state.category); */
 
-  // useEffect(() => {
-  //   if (success) {
-  //     navigate(-1);
-  //   }
-  // }, [success]);
+  const { loading, error, success } = useSelector((state) => state.bike);
+
+  useEffect(() => {
+    if (success) {
+      navigate(-1);
+    }
+  }, [success]);
 
   const handleBack = async () => {
     navigate(-1);
@@ -40,28 +33,29 @@ const AddBike = () => {
   return (
     <AddEditWrapper
       title='Bikes'
-      // error={error}
+      error={error}
       method='create'
-      // success={success}
+      success={success}
       handleBack={handleBack}
-      backlink='/admin/category'
+      backlink='/dashboard/bikes'
     >
       <Formik
         initialValues={{
           bikeName: "",
-          bikeNumber: "",
-          price: "",
+          bikeNo: "",
+          pricePerDay: "",
+          image: null,
         }}
         validationSchema={ValidateBikeAdd}
         onSubmit={async (values) => {
           let formdata = new FormData();
           formdata.append("bikeName", values.bikeName);
-          formdata.append("bikenumber", values.bikeNumber);
+          formdata.append("bikeNo", values.bikeNo);
           formdata.append("image", values.image);
-          formdata.append("perdayprice", values.perdayprice);
+          formdata.append("pricePerDay", parseInt(values.pricePerDay));
           console.log(values);
-          /*   await dispatch(addService(formdata));
-          await dispatch(clearFields()); */
+          await dispatch(addBike(formdata));
+          await dispatch(clearFields());
         }}
       >
         {(props) => (
@@ -81,7 +75,7 @@ const AddBike = () => {
                   <input
                     type='text'
                     className='w-full px-3 py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring'
-                    name='BikeName'
+                    name='bikeName'
                     onChange={props.handleChange}
                     onBlur={props.handleBlur}
                     value={props.values.bikeName || ""}
@@ -102,14 +96,14 @@ const AddBike = () => {
                   <input
                     type='text'
                     className='w-full px-3 py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring'
-                    name='bikenumber'
+                    name='bikeNo'
                     onChange={props.handleChange}
                     onBlur={props.handleBlur}
-                    value={props.values.bikenumber || ""}
+                    value={props.values.bikeNo || ""}
                   />
                 </div>
                 <span className='text-red-500 error'>
-                  <ErrorMessage name='bikenumber' />
+                  <ErrorMessage name='bikeNo' />
                 </span>
               </div>
               <div className='w-full px-4 mt-4 lg:w-6/12'>
@@ -118,52 +112,21 @@ const AddBike = () => {
                     className='block mb-2 text-xs font-bold uppercase text-blueGray-600'
                     htmlFor='grid-password'
                   >
-                    Perday Price
+                    Price Per Day
                   </label>
                   <input
-                    type='number'
+                    type='string'
                     className='w-full px-3 py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring'
-                    name='perdayprice'
+                    name='pricePerDay'
                     onChange={props.handleChange}
                     onBlur={props.handleBlur}
-                    value={props.values.perdayprice || ""}
+                    value={props.values.pricePerDay || ""}
                   />
                 </div>
                 <span className='text-red-500 error'>
-                  <ErrorMessage name='perdayprice' />
+                  <ErrorMessage name='pricePerDay' />
                 </span>
               </div>
-              {/*  <div className='w-full px-3 py-3 lg:w-6/12'>
-                <div className='relative w-full mb-3'>
-                  <label
-                    className='block mb-2 text-xs font-bold uppercase text-blueGray-600'
-                    htmlFor='grid-password'
-                  >
-                    Category
-                  </label>
-                  <select
-                    className='w-full px-3 py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-blueGray-300 text-blueGray-600 focus:outline-none'
-                    name='categoryId'
-                    onChange={props.handleChange}
-                    onBlur={props.handleBlur}
-                    value={props.values.categoryId}
-                    autoComplete='off'
-                  >
-                    <option>Select</option>
-                    {objectsWithEmptyChild.length !== 0 &&
-                      objectsWithEmptyChild.map((item, i) => {
-                        return (
-                          <>
-                            <option value={item.id}>{item.CategoryName}</option>
-                          </>
-                        );
-                      })}
-                  </select>
-                </div>
-                <span className='text-red-500 error'>
-                  <ErrorMessage name='categoryId' />
-                </span>
-              </div> */}
 
               <div className='w-full px-3 py-3 lg:w-3/12'>
                 <div className='relative w-full mb-3 '>
@@ -185,7 +148,7 @@ const AddBike = () => {
                   />
                 </div>
                 <span className='text-red-500 error'>
-                  <ErrorMessage name='fullName' />
+                  <ErrorMessage name='image' />
                 </span>
               </div>
               <div className='px-4 lg:w-3/12'>
@@ -203,22 +166,16 @@ const AddBike = () => {
             <hr className='mt-6 border-b-1 border-blueGray-300' />
             <div className='w-full px-3 py-3 lg:w-6/12'>
               <div className='relative w-full mt-3 mb-3'>
-                <button
-                  type='submit'
-                  className='px-4 py-2 mr-1 text-xs font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-orange active:bg-lightBlue-600 hover:shadow-md focus:outline-none'
-                >
-                  Submit
-                </button>
-                {/*  {loading ? (
+                {loading ? (
                   <Spinner />
                 ) : (
                   <button
                     type='submit'
-                    className='px-4 py-2 mr-1 text-xs font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-lightBlue-500 active:bg-lightBlue-600 hover:shadow-md focus:outline-none'
+                    className='px-4 py-2 mr-1 text-xs font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-orange active:bg-lightBlue-600 hover:shadow-md focus:outline-none'
                   >
                     Submit
                   </button>
-                )} */}
+                )}
               </div>
             </div>
           </form>
