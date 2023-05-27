@@ -8,15 +8,11 @@ const bike = require("./route/bike.route");
 const app = express();
 app.use(cors());
 
-
-
-
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use('/uploads', express.static(__dirname + '/uploads'));
-
+app.use("/uploads", express.static(__dirname + "/uploads"));
 
 app.use("/", user);
 app.use("/bike", bike);
