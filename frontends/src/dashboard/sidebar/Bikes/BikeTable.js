@@ -1,49 +1,28 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-// import Pagination from "../../Common/Pagination";
-// import Searchbar from "../../Common/Searchbar";
 import Spinner from "../../../Helper/Spinner";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
-// import { serviceAll } from "../../../redux/features/Service/serviceActions";
-// import { serviceCategory } from "../../../redux/features/Category/categoryActions";
-// import { DeleteBike } from "./DeleteBike";
-// import SearchbarService from "./SearchbarService";
-// import PaginationService from "./PaginationService";
+import { BikeAll } from "../../../redux/features/Bikes/bikeAction";
+import { DeleteBike } from "./DeleteBike";
 
 const BikeTable = ({ color }) => {
-  const bikes = [
-    {
-      id: 1,
-      bikename: "Pulsar 220",
-      bikeno: "2345",
-      category: "Economuter",
-      perDay: 2000,
-    },
-  ];
   const [showModal, setShowModal] = useState(false);
-  const [catId, setCatId] = useState();
-  // const [filter, setFilter] = useState("");
-  // const [page, setPage] = useState(0);
-  // const dispatch = useDispatch();
+  const [bikeId, setBikeId] = useState();
+  const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   dispatch(serviceAll());
-  // }, []);
+  useEffect(() => {
+    dispatch(BikeAll());
+  }, []);
 
-  // useEffect(() => {
-  //   dispatch(serviceCategory());
-  // }, []);
-
-  // const { loading, services, error } = useSelector((state) => state.service);
-  // const base_url = "http://localhost:5000/";
+  const { loading, bikes, error } = useSelector((state) => state.bike);
+  const base_url = "http://localhost:8000/";
   const handleDeleteClick = (id) => {
-    setCatId(id);
+    setBikeId(id);
     setShowModal(true);
   };
   return (
     <>
-      {/* <SearchbarService filter={filter} setFilter={setFilter} page={page} /> */}
       <table className='items-center w-full bg-white border-collapse'>
         <thead>
           <tr>
@@ -76,7 +55,7 @@ const BikeTable = ({ color }) => {
                   : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
               }
             >
-              Bike_no
+              Bike_number
             </th>
             <th
               className={
@@ -86,17 +65,7 @@ const BikeTable = ({ color }) => {
                   : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
               }
             >
-              Category
-            </th>
-            <th
-              className={
-                "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-center " +
-                (color === "light"
-                  ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                  : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
-              }
-            >
-              PerDay
+              PricePerDay
             </th>
             <th
               className={
@@ -111,8 +80,8 @@ const BikeTable = ({ color }) => {
           </tr>
         </thead>
         <tbody>
-          {/* {loading && <Spinner />}
-          {error && toast.error(error)} */}
+          {loading && <Spinner />}
+          {error && toast.error(error)}
           {bikes && bikes.length !== 0 ? (
             bikes.map((bike, i) => {
               return (
@@ -122,31 +91,26 @@ const BikeTable = ({ color }) => {
                   </td>
                   <td className='items-center p-4 px-6 text-left align-middle border-t-0 border-l-0 border-r-0 text-md whitespace-nowrap'>
                     <div className='flex'>
-                      {/* {service.image && (
+                      {bike.image && (
                         <img
-                          src={`${base_url}${service.image}`}
+                          src={`${base_url}${bike.image}`}
                           className='w-12 h-12 bg-white border rounded-full'
-                          alt={service.id}
+                          alt={bike.id}
                         ></img>
-                      )}{" "} */}
-                      {bike.bikename}
+                      )}{" "}
+                      {bike.bikeName}
                     </div>
                   </td>
                   <td className='items-center p-4 px-6 text-left align-middle border-t-0 border-l-0 border-r-0 text-md whitespace-nowrap'>
-                    {bike.bikeno}
+                    {bike.bikeNo}
                   </td>
-                  <td className='items-center p-4 px-6 text-left align-middle border-t-0 border-l-0 border-r-0 text-md whitespace-nowrap'>
-                    {bike.category}
-                    {/*   {service.selectedcategory
-                      ? service.selectedcategory.CategoryName
-                      : "null"} */}
-                  </td>
+
                   <td className='items-center p-4 px-6 text-center align-middle border-t-0 border-l-0 border-r-0 text-md whitespace-nowrap'>
-                    {bike.perDay}
+                    {bike.pricePerDay}
                   </td>
                   <td className='p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap'>
                     <div className='flex justify-center'>
-                      <Link to={`/admin/service/edit/${bike.id}`}>
+                      <Link to={`/dashboard/bikes/edit/${bike.id}`}>
                         <svg
                           xmlns='http://www.w3.org/2000/svg'
                           class='icon icon-tabler icon-tabler-edit'
@@ -205,13 +169,7 @@ const BikeTable = ({ color }) => {
           )}
         </tbody>
       </table>
-      {/* <PaginationService
-        page={page}
-        setPage={setPage}
-        filter={filter}
-        services={services}
-      /> */}
-      {/* {showModal && <DeleteService id={catId} setShowModal={setShowModal} />} */}
+      {showModal && <DeleteBike id={bikeId} setShowModal={setShowModal} />}
     </>
   );
 };

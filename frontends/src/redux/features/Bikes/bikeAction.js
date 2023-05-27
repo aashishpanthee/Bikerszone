@@ -2,10 +2,10 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import Http from "../../../Helper/Http";
 
 export const addBike = createAsyncThunk(
-  "bikes/add",
+  "bike/add",
   async (bikesData, { rejectWithValue }) => {
     try {
-      const data = await Http.post("/bikes/create", bikesData);
+      const data = await Http.post("/bike/", bikesData);
       return data.data;
     } catch (error) {
       if (error.response && error.response.data.message) {
@@ -17,11 +17,11 @@ export const addBike = createAsyncThunk(
   }
 );
 export const BikeAll = createAsyncThunk(
-  "bikes/all",
+  "bike/all",
   async (data, { rejectWithValue }) => {
     try {
-      const data = await Http.get("/bikes");
-      return data.data.data;
+      const data = await Http.get("/bike/all");
+      return data.data;
     } catch (error) {
       if (error.response && error.response.data.message) {
         return rejectWithValue(error.response.data.message);
@@ -33,10 +33,11 @@ export const BikeAll = createAsyncThunk(
 );
 
 export const getBikeById = createAsyncThunk(
-  "bikes/id",
+  "bike/id",
   async (id, { rejectWithValue }) => {
     try {
-      const data = await Http.get(`/bikes/${id}`);
+      const data = await Http.get(`/bike/${id}`);
+      console.log(data.data, "getbikebyid");
       return data.data;
     } catch (error) {
       if (error.response && error.response.data.message) {
@@ -48,10 +49,11 @@ export const getBikeById = createAsyncThunk(
   }
 );
 export const editBikeById = createAsyncThunk(
-  "bikes/edit",
+  "bike/edit",
   async (item, { rejectWithValue }) => {
     try {
-      const data = await Http.patch(`/bikes/${item.id}`, item.formdata);
+      const data = await Http.put(`/bike/update/${item.id}`, item.formdata);
+      console.log(data.data, "editbikebyid from bikeAction");
       return data.data;
     } catch (error) {
       if (error.response && error.response.data.message) {
@@ -63,10 +65,10 @@ export const editBikeById = createAsyncThunk(
   }
 );
 export const deleteBike = createAsyncThunk(
-  "bikes/delete",
+  "bike/delete",
   async (id, { rejectWithValue }) => {
     try {
-      const data = await Http.delete(`/bikes/${id}`);
+      const data = await Http.delete(`/bike/delete/${id}`);
       return data.data;
     } catch (error) {
       if (error.response && error.response.data.message) {
