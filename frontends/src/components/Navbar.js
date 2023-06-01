@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
@@ -59,13 +59,13 @@ export default function Navbar() {
                 </Link>
                 <div className='hidden sm:flex sm:ml-6'>
                   <div className='flex space-x-4'>
-                    {navigation.map((item) => (
+                    {navigation.map((item, index) => (
                       <Link
                         key={item.name}
                         to={item.href}
                         className={classNames(
-                          "text-black hover:bg-black hover:text-white",
-                          "rounded-md px-3 py-2 text-sm font-medium"
+                          " hover:bg-orange hover:text-white text-semibold",
+                          "rounded-md px-3 py-2 text-sm font-bold text-slate-900"
                         )}
                       >
                         {item.name}
@@ -78,10 +78,15 @@ export default function Navbar() {
                 <div className='text-right'>
                   <Menu as='div' className='text-left '>
                     <div>
-                      <Menu.Button className='inline-flex justify-center w-full px-4 py-2 text-base font-medium rounded-md text-slate-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75'>
+                      <Menu.Button className='inline-flex items-center justify-center w-full px-4 py-2 text-base font-medium rounded-md text-orange focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75'>
+                        <img
+                          src='../ashish.jpg'
+                          alt=''
+                          className='w-10 h-10 mr-2 rounded-full'
+                        />
                         {userInfo.name}
                         <ChevronDownIcon
-                          className='w-5 h-5 ml-2 -mr-1 text-slate-900 '
+                          className='w-5 h-5 ml-2 -mr-1 text-orange'
                           aria-hidden='true'
                         />
                       </Menu.Button>

@@ -1,7 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import CardStats from "./CardStats";
-
+import { useDispatch, useSelector } from "react-redux";
+import { BikeAll } from "../../redux/features/Bikes/bikeAction";
+import { userAll } from "../../redux/features/User/authAction";
 const Headerstats = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(BikeAll());
+  }, []);
+  // useEffect(() => {
+  //   dispatch(userAll());
+  // }, []);
+  const { bikes } = useSelector((state) => state.bike);
+  // const { users } = useSelector((state) => state.users);
+  let totalbikes = bikes.length;
+  // let totalUsers = users ? users.length : `No users currently`;
   return (
     <>
       {/* Header */}
@@ -13,7 +26,7 @@ const Headerstats = () => {
               <div className='w-full px-4 lg:w-6/12 xl:w-3/12'>
                 <CardStats
                   statSubtitle='Users'
-                  statTitle='250'
+                  statTitle='10'
                   statArrow='up'
                   statPercent='3.48'
                   statPercentColor='text-emerald-500'
@@ -25,7 +38,7 @@ const Headerstats = () => {
               <div className='w-full px-4 lg:w-6/12 xl:w-3/12'>
                 <CardStats
                   statSubtitle='Total Bikes'
-                  statTitle='50'
+                  statTitle={totalbikes}
                   statArrow='down'
                   statPercent='3.48'
                   statPercentColor='text-red-500'
@@ -48,7 +61,7 @@ const Headerstats = () => {
               </div>
               <div className='w-full px-4 lg:w-6/12 xl:w-3/12'>
                 <CardStats
-                  statSubtitle='Categories'
+                  statSubtitle='Rented Bikes'
                   statTitle='3'
                   statArrow='up'
                   statPercent='12'
