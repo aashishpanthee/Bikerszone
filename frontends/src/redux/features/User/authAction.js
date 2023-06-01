@@ -15,7 +15,6 @@ export const userLogin = createAsyncThunk(
       console.log("loggin successfull", data.data);
       return data.data;
     } catch (error) {
-      console.log(error);
       if (error.response && error.response.data.message) {
         return rejectWithValue(error.response.data.message);
       } else {
@@ -47,13 +46,9 @@ export const userRegister = createAsyncThunk(
 );
 export const userAll = createAsyncThunk(
   "user/all",
-  async ({ page, filter }, { rejectWithValue }) => {
+  async (allUser, { rejectWithValue }) => {
     try {
-      let url = `/user?page=${page}`;
-      if (filter) {
-        url += `&filter=${filter}`;
-      }
-      const data = await Http.get(url);
+      const data = await Http.get(`/user/`);
       return data.data.data;
     } catch (error) {
       if (error.response && error.response.data.message) {

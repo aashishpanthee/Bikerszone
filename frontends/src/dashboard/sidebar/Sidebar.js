@@ -12,7 +12,7 @@ export default function Sidebar() {
   //   if (userInfo) {
   return (
     <>
-      <nav className='flex-wrap items-center justify-between px-6 py-4 text-white shadow-xl relativeflex bg-sky-600 md:left-0 md:block md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden md:w-64'>
+      <nav className='flex-wrap items-center justify-between px-6 py-4 text-[#000839] shadow-xl relativeflex bg-[#00A1AB] md:left-0 md:block md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden md:w-64'>
         <div className='flex flex-wrap items-center justify-between w-full px-0 mx-auto md:flex-col md:items-stretch md:min-h-full md:flex-nowrap'>
           {/* Toggler */}
           <button
@@ -24,7 +24,7 @@ export default function Sidebar() {
           </button>
           {/* Brand */}
           <Link
-            className='inline-block p-4 px-0 mr-0 text-sm font-bold text-left text-white uppercase md:block md:pb-2 whitespace-nowrap'
+            className='inline-block p-4 px-0 mr-0 text-2xl font-extrabold text-center uppercase shadow md:block md:pb-2 whitespace-nowrap'
             to='/'
           >
             BikeBook
@@ -36,11 +36,11 @@ export default function Sidebar() {
             }
           >
             {/* Collapse header */}
-            <div className='block pb-2 mb-2 border-b border-solid md:min-w-full md:hidden border-blueGray-200'>
+            <div className='block pb-2 mb-2 border-solid md:min-w-full md:hidden'>
               <div className='flex flex-wrap'>
                 <div className='w-6/12'>
                   <Link
-                    className='inline-block px-0 mr-0 text-sm font-bold text-left text-white uppercase md:block whitespace-nowrap'
+                    className='inline-block px-0 mr-0 text-sm font-bold text-left uppercase md:block whitespace-nowrap'
                     to='/'
                   >
                     BikeBook
@@ -71,7 +71,7 @@ export default function Sidebar() {
             {/* Divider */}
             <hr className='my-4 md:min-w-full' />
             {/* Heading */}
-            <h6 className='block pt-1 pb-4 text-xs font-bold text-white no-underline uppercase md:min-w-full'>
+            <h6 className='block pt-1 pb-4 text-base font-bold text-gray-100 no-underline uppercase md:min-w-full'>
               All datas
             </h6>
             {/* Navigation */}
@@ -79,7 +79,7 @@ export default function Sidebar() {
             <ul className='flex flex-col list-none md:flex-col md:min-w-full md:mb-4'>
               <li className='items-center'>
                 <Link
-                  className='flex items-center py-3 text-xs font-bold uppercase'
+                  className='flex items-center py-3 text-sm font-bold uppercase '
                   to='/dashboard/users'
                 >
                   <svg
@@ -103,7 +103,7 @@ export default function Sidebar() {
             <ul className='flex flex-col list-none md:flex-col md:min-w-full md:mb-4'>
               <li className='items-center'>
                 <Link
-                  className='flex items-center text-xs font-bold uppercase'
+                  className='flex items-center text-sm font-bold uppercase'
                   to='/dashboard/bikes'
                 >
                   <svg
@@ -127,7 +127,7 @@ export default function Sidebar() {
             <ul className='flex flex-col pt-2 list-none md:flex-col md:min-w-full md:mb-4'>
               <li className='items-center'>
                 <Link
-                  className='flex items-center text-xs font-bold uppercase '
+                  className='flex items-center text-sm font-bold uppercase '
                   to='/admin/service'
                 >
                   <svg

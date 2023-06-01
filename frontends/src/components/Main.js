@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 const Main = () => {
   return (
     <section className='py-3 text-center bg-teal-50 h-1/2'>
-      <h3 className='mt-2 text-2xl antialiased font-semibold sm:font-extrabold sm:text-6xl sm:pt-10 text-slate-900 sm:mt-4'>
+      <h3 className='mt-2 text-2xl antialiased font-semibold sm:font-extrabold sm:text-6xl sm:pt-10 text-orange sm:mt-4'>
         Rent a Bike
       </h3>
       <LazyLoadImage
@@ -17,7 +17,7 @@ const Main = () => {
         effect='blur'
       />
       <Link
-        className='px-2 py-1 mt-2 text-white rounded bg-orange sm:font-semibold sm:py-2 sm:px-4 hover:bg-black sm:mt-4'
+        className='px-2 py-1 mt-2 text-white rounded bg-slate-900 sm:font-semibold sm:py-2 sm:px-4 hover:bg-orange sm:mt-4'
         to='/bikerentsection'
       >
         Bike Showcase
