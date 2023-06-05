@@ -57,7 +57,7 @@ const Categories = () => {
                 </h2>
 
                 <Link
-                  class='text-indigo-500 inline-flex items-center mt-1'
+                  class='text-orange inline-flex items-center mt-1'
                   to={array.href}
                 >
                   Enquire Now

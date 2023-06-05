@@ -1,50 +1,37 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import DeleteModal from "../../common/Delete";
 import { useDispatch, useSelector } from "react-redux";
-// import { userAll } from "../../../redux/features/User/authActions";
+import { userAll } from "../../../redux/features/User/authAction";
 import Spinner from "../../../Helper/Spinner";
 import toast from "react-hot-toast";
-// import Searchbar from "../../common/Searchbar";
-
-// const base_url = "http://localhost:5000/";
+const base_url = "http://localhost:8000/";
 
 const UserTable = () => {
+  const dispatch = useDispatch();
   const users = [
     {
-      id: 1,
-      name: "Aashish",
-      email: "aashish@gmail.com",
-      contact: "874748",
-      gender: "male",
-      role: "admin",
+      name: "Aashish Panthee",
+      email: "aashishpanthee090@gmail.com",
+      role: "customer",
     },
     {
-      id: 2,
-      name: "Aashish",
-      email: "aashish@gmail.com",
-      contact: "874748",
-      gender: "male",
-      role: "admin",
+      name: "Sumit Thapa",
+      email: "aashishpanthee090@gmail.com",
+      role: "customer",
     },
   ];
-  const [showModal, setShowModal] = useState(false);
-  const dispatch = useDispatch();
-  const [filter, setFilter] = useState("");
-  const [page, setPage] = useState(0);
   // const { loading, userInfo, users, error } = useSelector(
   //   (state) => state.auth
   // );
 
   // useEffect(() => {
   //   dispatch(userAll());
-  // }, [page, filter]);
+  // }, []);
 
   return (
     <>
       {/* {loading && <Spinner />}
       {error && toast.error(error)} */}
-      {/* <Searchbar filter={filter} setFilter={setFilter} page={page} /> */}
       <table className='items-center w-full bg-transparent border-collapse'>
         <thead>
           <tr>
@@ -85,16 +72,7 @@ const UserTable = () => {
               return (
                 <tr key={user.id}>
                   <td className='items-center p-4 px-6 align-middle border-t-0 border-l-0 border-r-0 text-md whitespace-nowrap'>
-                    <div className='flex justify-center'>
-                      {/* {user.image && (
-                        <img
-                          src={`${base_url}${user.image}`}
-                          className='w-12 h-12 bg-white border rounded-full'
-                          alt={user.id}
-                        ></img>
-                      )}{" "} */}
-                      {user.name}
-                    </div>
+                    <div className='flex justify-center'>{user.name}</div>
                   </td>
                   <td className='items-center p-4 px-6 text-center align-middle border-t-0 border-l-0 border-r-0 text-md whitespace-nowrap'>
                     {user.email}
@@ -138,9 +116,6 @@ const UserTable = () => {
           )}
         </tbody>
       </table>
-      {/* {showModal ? (
-        <DeleteModal showModal={showModal} setShowModal={setShowModal} />
-      ) : null} */}
     </>
   );
 };

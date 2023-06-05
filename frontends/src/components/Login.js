@@ -17,7 +17,7 @@ const Login = () => {
   const { loading, userInfo, error } = useSelector((state) => state.auth);
   const onSubmit = async (event) => {
     if (!email || !password) {
-      toast.error("invalid credintals");
+      toast.error("Invalid credintals");
     }
     const data = {
       email: email,
@@ -97,7 +97,7 @@ const Login = () => {
                 </a>
               </div>
             </div>
-            {error && <Error>{error}</Error>}
+
             <div>
               <button
                 type='submit'
@@ -108,6 +108,7 @@ const Login = () => {
                 {loading ? <Spinner /> : "Login"}
               </button>
             </div>
+            {error && toast.error("Invalid Credentials")}
           </form>
 
           <p class='mt-3 text-center text-sm text-gray-500'>

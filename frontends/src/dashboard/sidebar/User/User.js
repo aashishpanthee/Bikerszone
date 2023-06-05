@@ -12,7 +12,7 @@ const User = () => {
               <div className='flex flex-wrap items-center'>
                 <div className='relative flex-1 flex-grow w-full max-w-full px-4'>
                   <h3 className='py-2 text-lg font-semibold text-orange'>
-                    Users
+                    Total Users
                   </h3>
                 </div>
               </div>
