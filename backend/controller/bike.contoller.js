@@ -6,7 +6,8 @@ const addBike = (req, res) => {
         bikeName:req.body.bikeName,
         bikeNo:req.body.bikeNo,
         image:req.file ? req.file.path : null,
-        pricePerDay:req.body.pricePerDay
+        pricePerDay:req.body.pricePerDay,
+        userId:req.userData.id
     };
     model.bikes.create(bike)
       .then((Result) => {

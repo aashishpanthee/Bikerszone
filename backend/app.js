@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const { sequelize } = require("./models");
 const user = require("./route/user.route");
 const bike = require("./route/bike.route");
+const rent = require("./route/rental.route");
 
 const app = express();
 app.use(cors());
@@ -16,5 +17,6 @@ app.use("/uploads", express.static(__dirname + "/uploads"));
 
 app.use("/", user);
 app.use("/bike", bike);
+app.use("/rent", rent);
 
 module.exports = app;
