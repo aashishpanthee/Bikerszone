@@ -50,7 +50,7 @@ const BikeRentSection = () => {
                     </button>
                     <Link
                       class=' inline-flex items-center px-3 py-2  text-white bg-orange border-0 rounded focus:outline-none hover:bg-black'
-                      to='/order'
+                      to={`/order/${bike.id}`}
                     >
                       Enquire Now
                       <svg

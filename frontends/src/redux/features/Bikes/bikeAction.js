@@ -37,7 +37,6 @@ export const getBikeById = createAsyncThunk(
   async (id, { rejectWithValue }) => {
     try {
       const data = await Http.get(`/bike/${id}`);
-      console.log(data.data, "getbikebyid");
       return data.data;
     } catch (error) {
       if (error.response && error.response.data.message) {
@@ -53,7 +52,6 @@ export const editBikeById = createAsyncThunk(
   async (item, { rejectWithValue }) => {
     try {
       const data = await Http.put(`/bike/update/${item.id}`, item.formdata);
-      console.log(data.data, "editbikebyid from bikeAction");
       return data.data;
     } catch (error) {
       if (error.response && error.response.data.message) {

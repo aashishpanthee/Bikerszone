@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { AddOrder, AllOrderById, AllOrder } from "./orderAction";
 
 const initialState = {
   loading: false,
@@ -13,10 +14,10 @@ const orderSlice = createSlice({
   initialState,
   reducers: {
     clearFields: (state, { payload }) => {
-      (state.success = false),
-        (state.loading = false),
-        (state.error = false),
-        (state.orderById = null);
+      state.success = false;
+      state.loading = false;
+      state.error = false;
+      state.orderById = null;
     },
   },
   extraReducers: {
@@ -63,3 +64,5 @@ const orderSlice = createSlice({
     },
   },
 });
+export const { clearFields } = orderSlice.actions;
+export default orderSlice.reducer;

@@ -1,11 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import Http from "../../../Helper/Spinner";
+import Http from "../../../Helper/Http";
 
 export const AllOrder = createAsyncThunk(
   "order/all",
   async (alluser, { rejectWithValue }) => {
     try {
-      const data = await Http.get("/userorder/");
+      const data = await Http.get("/rent/bike");
       return data.data.data;
     } catch (error) {
       if (error.response && error.response.data.message) {
@@ -20,7 +20,7 @@ export const AllOrderById = createAsyncThunk(
   "order/getById",
   async (id, { rejectWithValue }) => {
     try {
-      const data = await Http.get(`/userorder/${id}`);
+      const data = await Http.get(`/rent/bike/${id}`);
       return data.data;
     } catch (error) {
       if (error.response && error.response.data.message) {
@@ -73,7 +73,8 @@ export const AddOrder = createAsyncThunk(
   "order/add/",
   async (formData, { rejectWithValue }) => {
     try {
-      const data = await Http.post("/userorder/add/", formData);
+      const data = await Http.post("/rent/", formData);
+      console.log(data, "orderaction");
       return data.data;
     } catch (error) {
       if (error.response && error.response.data.message) {

@@ -27,7 +27,7 @@ function App() {
         <Route path='/reviews' element={<Testimonial />} />
         <Route path='/contact' element={<Contact />} />
         <Route
-          path='/order/*'
+          path='/order/:id'
           element={
             <ProtectedElement>
               <Order />
