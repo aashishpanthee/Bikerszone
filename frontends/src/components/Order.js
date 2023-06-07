@@ -1,49 +1,59 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "./Navbar";
-import { Formik, ErrorMessage } from "formik";
-
+import { DatePicker } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getBikeById } from "../redux/features/Bikes/bikeAction";
 import { useParams } from "react-router-dom";
 import Spinner from "../Helper/Spinner";
 import { AddOrder } from "../redux/features/Order/orderAction";
+import { clearFields } from "../redux/features/Order/orderSlice";
 const base_url = "http://localhost:8000/";
+const { RangePicker } = DatePicker;
 const Order = () => {
   let { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [days, setDays] = useState(1);
+  const [from, setFrom] = useState();
+  const [to, setTo] = useState();
+  const [days, setDays] = useState(0);
+  const [totalamount, setTotalAmount] = useState(0);
+
+  const { bikeById } = useSelector((state) => state.bike);
+  const { loading, success } = useSelector((state) => state.order);
   useEffect(() => {
     dispatch(getBikeById(id));
-  }, [id]);
-  const { loading, success, error, bikeById } = useSelector(
-    (state) => state.bike
-  );
-  const perDayPrice = bikeById ? bikeById.pricePerDay : 0;
-  const handleIncrement = () => {
-    setDays(days + 1);
-  };
+  }, [id, dispatch]);
 
-  const handleDecrement = () => {
-    if (days > 1) {
-      setDays(days - 1);
-    }
-  };
-  const totalAmt = perDayPrice * days;
-  const handleOrder = async () => {
-    const formData = {
-      totalAmt: totalAmt,
-      days: days,
-      bikeId: bikeById.id,
-    };
-    await dispatch(AddOrder(formData));
-  };
   useEffect(() => {
     if (success) {
       navigate("/");
+      console.log("success");
     }
-  }, [success]);
+  }, [success, navigate]);
+  const handleOrder = async () => {
+    const formData = {
+      totalAmt: totalamount,
+      startDate: from,
+      endDate: to,
+      bikeId: bikeById.id,
+    };
+    await dispatch(AddOrder(formData));
+    await dispatch(clearFields());
+  };
+  const selectTimeSlots = (values) => {
+    let a = values[0];
+    let b = values[1].toDate();
+    setFrom(a);
+    setTo(b);
+    setDays(values[1].diff(values[0], "days"));
+  };
+
+  useEffect(() => {
+    if (bikeById) {
+      setTotalAmount(days * bikeById.pricePerDay);
+    }
+  }, [days, bikeById]);
   return (
     <>
       {bikeById ? (
@@ -63,6 +73,9 @@ const Order = () => {
                   </h2>
                   <h1 class='text-gray-900 text-3xl title-font font-medium mb-1'>
                     {bikeById.bikeName}
+                  </h1>
+                  <h1 class='text-gray-900 text-xl  font-normal mb-1'>
+                    Rent per day :<span> Rs {bikeById.pricePerDay}</span>
                   </h1>
                   <div class='flex mb-4'>
                     <span class='flex items-center'>
@@ -132,18 +145,13 @@ const Order = () => {
                     journeys.The bike also features front and rear disc brakes,
                     ensuring efficient braking performance.
                   </p> */}
-
-                  <div className='flex py-3 text-xl font-semibold'>
-                    <span class='mr-3 text-gray-900'>Days :</span>
-                    <button onClick={handleDecrement} className='px-3'>
-                      -
-                    </button>
-                    <div className='px-3'>{days}</div>
-                    <button onClick={handleIncrement} className='px-3'>
-                      +
-                    </button>
-                  </div>
+                  <RangePicker
+                    format='DD MMMM YYYY'
+                    onChange={selectTimeSlots}
+                    className='mb-2'
+                  />
                   {/*  */}
+                  <div className='font-semibold'>Total Days: {days}</div>
                   <div class='flex items-center'>
                     <span className='text-xl font-medium text-gray-900 title-font'>
                       Price :
@@ -152,11 +160,12 @@ const Order = () => {
                       class='title-font  ml-2 font-medium text-xl'
                       name='totalAmt'
                     >
-                      Rs {totalAmt}
+                      Rs {totalamount}
                     </span>
                     <button
                       type='submit'
                       class='flex ml-auto text-white bg-orange border-0 py-2 px-6 focus:outline-none hover:bg-black rounded'
+                      disabled={!to && !from}
                       onClick={handleOrder}
                     >
                       Rent Now
