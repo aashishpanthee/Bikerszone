@@ -4,15 +4,18 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Footer from "./Footer";
 import { BikeAll } from "../redux/features/Bikes/bikeAction";
+import { addToCart } from "../redux/features/Cart/cartSlice";
 
 const BikeRentSection = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(BikeAll());
-  }, []);
+  }, [dispatch]);
   const { loading, bikes, error } = useSelector((state) => state.bike);
   const base_url = "http://localhost:8000/";
-
+  const handleCart = (bike) => {
+    dispatch(addToCart(bike));
+  };
   return (
     <>
       <Navbar />
@@ -36,25 +39,33 @@ const BikeRentSection = () => {
                     <h2 class='text-gray-900 title-font text-lg font-medium'>
                       {bike.bikeName}
                     </h2>
-                    <p class='mt-1'>{bike.pricePerDay}</p>
+                    <p class='mt-1'>Price per day: {bike.pricePerDay}</p>
                   </div>
-                  <Link
-                    class='text-indigo-500 inline-flex items-center mt-1'
-                    to='/order'
-                  >
-                    Enquire Now
-                    <svg
-                      fill='none'
-                      stroke='currentColor'
-                      stroke-linecap='round'
-                      stroke-linejoin='round'
-                      stroke-width='2'
-                      class='w-4 h-4 ml-2'
-                      viewBox='0 0 24 24'
+                  <div className='flex justify-between mt-3'>
+                    <button
+                      className='flex px-6 py-2 text-white bg-blue-500 border-0 rounded focus:outline-none hover:bg-black'
+                      onClick={() => handleCart(bike)}
                     >
-                      <path d='M5 12h14M12 5l7 7-7 7'></path>
-                    </svg>
-                  </Link>
+                      Add to cart
+                    </button>
+                    <Link
+                      class=' inline-flex items-center px-3 py-2  text-white bg-orange border-0 rounded focus:outline-none hover:bg-black'
+                      to={`/order/${bike.id}`}
+                    >
+                      Enquire Now
+                      <svg
+                        fill='none'
+                        stroke='currentColor'
+                        stroke-linecap='round'
+                        stroke-linejoin='round'
+                        stroke-width='2'
+                        class='w-4 h-4 ml-2'
+                        viewBox='0 0 24 24'
+                      >
+                        <path d='M5 12h14M12 5l7 7-7 7'></path>
+                      </svg>
+                    </Link>
+                  </div>
                 </div>
               ))}
           </div>

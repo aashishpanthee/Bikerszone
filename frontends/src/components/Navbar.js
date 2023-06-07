@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import {
+  Bars3Icon,
+  ShoppingBagIcon,
+  XMarkIcon,
+} from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
 import { Fragment } from "react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
@@ -22,6 +26,7 @@ export default function Navbar() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { loading, userInfo, error } = useSelector((state) => state.auth);
+  const { cartTotalQuantity } = useSelector((state) => state.cart);
   const handleLogout = () => {
     dispatch(logout());
     navigate("/");
@@ -75,7 +80,13 @@ export default function Navbar() {
                 </div>
               </div>
               {userInfo !== undefined && userInfo !== null ? (
-                <div className='text-right'>
+                <div className='flex items-center text-right'>
+                  <Link className='flex items-center' to='/cart'>
+                    <ShoppingBagIcon className='w-6 h-6 ' />
+                    <span className='flex flex-col items-center justify-center font-semibold cursor-pointer'>
+                      <span className=''>Your Cart</span>
+                    </span>
+                  </Link>
                   <Menu as='div' className='text-left '>
                     <div>
                       <Menu.Button className='inline-flex items-center justify-center w-full px-4 py-2 text-base font-medium rounded-md text-orange focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75'>
@@ -119,14 +130,14 @@ export default function Navbar() {
                           <Menu.Item>
                             {({ active }) => (
                               <Link
-                                to='/order'
+                                to='/cart'
                                 className={`${
                                   active
                                     ? "bg-orange text-white"
                                     : "text-gray-900"
                                 } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                               >
-                                Your orders
+                                Your cart
                               </Link>
                             )}
                           </Menu.Item>
