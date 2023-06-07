@@ -12,6 +12,7 @@ import Dashboard from "./dashboard/Dashboard";
 import ProtectedRoute from "./Helper/ProtectedRoute";
 import ProtectedElement from "./Helper/ProtectedElement";
 import Order from "./components/Order";
+import Cart from "./components/Cart";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path='/signup' element={<Signup />} />
         <Route path='/bikecategory' element={<Categories />} />
         <Route path='/bikerentsection' element={<BikeRentSection />} />
+        <Route path='/cart' element={<Cart />} />
         <Route path='/reviews' element={<Testimonial />} />
         <Route path='/contact' element={<Contact />} />
         <Route

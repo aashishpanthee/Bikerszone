@@ -2,21 +2,21 @@ import React, { useState } from "react";
 import Navbar from "./Navbar";
 
 const Order = () => {
-  const [selectedDay, setSelectedDay] = useState("1");
-  const dayPrices = {
-    1: 2000,
-    2: 4000,
-    3: 6000,
-    4: 8000,
-    5: 10000,
+  const [days, setDays] = useState(1);
+  const perDayPrice = 2000;
+
+  const handleIncrement = () => {
+    setDays(days + 1);
   };
 
-  const handleDayChange = (event) => {
-    setSelectedDay(event.target.value);
+  const handleDecrement = () => {
+    if (days > 1) {
+      setDays(days - 1);
+    }
   };
 
-  const price = dayPrices[selectedDay];
-  console.log(price);
+  const totalPrice = perDayPrice * days;
+
   return (
     <>
       <Navbar />
@@ -103,45 +103,24 @@ const Order = () => {
                 also features front and rear disc brakes, ensuring efficient
                 braking performance.
               </p>
-              <div class='flex mt-2 items-center pb-5 border-b-2 border-gray-100 mb-5'>
-                <span class=''>Mileage: </span>
-                <span className='ml-2'> 35-50km</span>
-                <div class='flex ml-3 items-center'>
-                  <span class='mr-3'>Days</span>
-                  <div class='relative'>
-                    <select
-                      class='rounded border appearance-none border-gray-300 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 text-base pl-3 pr-10'
-                      value={selectedDay}
-                      onChange={handleDayChange}
-                    >
-                      <option value='1'>1</option>
-                      <option value='2'>2</option>
-                      <option value='3'>3</option>
-                      <option value='4'>4</option>
-                      <option value='5'>5</option>
-                    </select>
-                    <span class='absolute right-0 top-0 h-full w-10 text-center text-gray-600 pointer-events-none flex items-center justify-center'>
-                      <svg
-                        fill='none'
-                        stroke='currentColor'
-                        stroke-linecap='round'
-                        stroke-linejoin='round'
-                        stroke-width='2'
-                        class='w-4 h-4'
-                        viewBox='0 0 24 24'
-                      >
-                        <path d='M6 9l6 6 6-6'></path>
-                      </svg>
-                    </span>
-                  </div>
-                </div>
+
+              <div className='flex py-3 text-xl font-semibold'>
+                <span class='mr-3 text-gray-900'>Days :</span>
+                <button onClick={handleDecrement} className='px-3'>
+                  -
+                </button>
+                <div className='px-3'>{days}</div>
+                <button onClick={handleIncrement} className='px-3'>
+                  +
+                </button>
               </div>
-              <div class='flex'>
-                <span className='text-2xl font-medium text-gray-900 title-font'>
-                  Price:
+              {/*  */}
+              <div class='flex items-center'>
+                <span className='text-xl font-medium text-gray-900 title-font'>
+                  Price :
                 </span>
-                <span class='title-font  ml-2 font-medium text-2xl text-gray-900'>
-                  NPR {price}
+                <span class='title-font  ml-2 font-medium text-xl'>
+                  Rs {totalPrice}
                 </span>
                 <button class='flex ml-auto text-white bg-orange border-0 py-2 px-6 focus:outline-none hover:bg-black rounded'>
                   Rent Now

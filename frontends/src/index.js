@@ -1,14 +1,18 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
+import "./App.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
-import toast, { Toaster } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 import { store } from "../src/redux/store";
 import { Provider } from "react-redux";
+import { getTotals } from "./redux/features/Cart/cartSlice";
+import { BikeAll } from "./redux/features/Bikes/bikeAction";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
+store.dispatch(getTotals());
 root.render(
   <Provider store={store}>
     <BrowserRouter>
