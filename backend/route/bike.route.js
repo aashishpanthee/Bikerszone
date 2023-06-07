@@ -8,7 +8,7 @@ const imageUpload = require("../helpers/image-uploader")
 
 
 
-router.post("/",imageUpload.upload.single('image'),bikeController.addBike)
+router.post("/",verifyMiddleware.verification,imageUpload.upload.single('image'),bikeController.addBike)
 router.get("/all",bikeController.allBike)
 router.get("/:id",bikeController.showBike)
 router.delete("/delete/:id",bikeController.deleteBike)

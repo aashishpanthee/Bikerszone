@@ -7,7 +7,7 @@ const verifyMiddleware = require("../middleware/verifacation")
 
 
 
-router.post("/",rentalController.addRental)
+router.post("/",verifyMiddleware.verification,rentalController.addRental)
 router.get ("/bike",rentalController.allRentedBike)
 router.get ("/bike/:id",rentalController.rentedBikeId)
 
