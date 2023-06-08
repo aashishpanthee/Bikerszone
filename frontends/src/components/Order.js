@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "./Navbar";
+import moment from "moment";
+import { Button, Modal, Space } from "antd";
 import { DatePicker } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -7,6 +8,7 @@ import { getBikeById } from "../redux/features/Bikes/bikeAction";
 import { useParams } from "react-router-dom";
 import Spinner from "../Helper/Spinner";
 import { AddOrder } from "../redux/features/Order/orderAction";
+import { toast } from "react-hot-toast";
 import { clearFields } from "../redux/features/Order/orderSlice";
 const base_url = "http://localhost:8000/";
 const { RangePicker } = DatePicker;
@@ -18,9 +20,15 @@ const Order = () => {
   const [to, setTo] = useState();
   const [days, setDays] = useState(0);
   const [totalamount, setTotalAmount] = useState(0);
-
+  const [open, setOpen] = useState(false);
   const { bikeById } = useSelector((state) => state.bike);
   const { loading, success } = useSelector((state) => state.order);
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, []);
   useEffect(() => {
     dispatch(getBikeById(id));
   }, [id, dispatch]);
@@ -28,18 +36,13 @@ const Order = () => {
   useEffect(() => {
     if (success) {
       navigate("/");
+      toast.success("Your order has been placed");
       console.log("success");
     }
   }, [success, navigate]);
-  const handleOrder = async () => {
-    const formData = {
-      totalAmt: totalamount,
-      startDate: from,
-      endDate: to,
-      bikeId: bikeById.id,
-    };
-    await dispatch(AddOrder(formData));
-    await dispatch(clearFields());
+  const disabledDate = (current) => {
+    // Disable dates before today or the current date
+    return current && current < moment().startOf("day");
   };
   const selectTimeSlots = (values) => {
     let a = values[0];
@@ -54,17 +57,33 @@ const Order = () => {
       setTotalAmount(days * bikeById.pricePerDay);
     }
   }, [days, bikeById]);
+  const showModal = () => {
+    setOpen(true);
+  };
+  const submitModal = async () => {
+    const formData = {
+      totalAmt: totalamount,
+      startDate: from,
+      endDate: to,
+      bikeId: bikeById.id,
+    };
+    await dispatch(AddOrder(formData));
+    await dispatch(clearFields());
+    setOpen(false);
+  };
+  const hideModal = () => {
+    setOpen(false);
+  };
   return (
     <>
       {bikeById ? (
         <>
-          <Navbar />
           <section class='text-gray-600 body-font overflow-hidden'>
             <div class='container px-5 py-10 mx-auto'>
               <div class='lg:w-4/5 mx-auto flex flex-wrap'>
                 <img
                   alt={bikeById.bikeName}
-                  className='object-cover object-center w-full h-48 rounded lg:w-1/2 lg:h-auto'
+                  className='object-cover object-center w-full rounded h-60 sm:h-36 lg:w-1/2 lg:h-auto'
                   src={`${base_url}${bikeById.image}`}
                 />
                 <div class='lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0'>
@@ -147,10 +166,11 @@ const Order = () => {
                   </p> */}
                   <RangePicker
                     format='DD MMMM YYYY'
+                    disabledDate={disabledDate}
                     onChange={selectTimeSlots}
                     className='mb-2'
                   />
-                  {/*  */}
+
                   <div className='font-semibold'>Total Days: {days}</div>
                   <div class='flex items-center'>
                     <span className='text-xl font-medium text-gray-900 title-font'>
@@ -162,14 +182,25 @@ const Order = () => {
                     >
                       Rs {totalamount}
                     </span>
-                    <button
-                      type='submit'
-                      class='flex ml-auto text-white bg-orange border-0 py-2 px-6 focus:outline-none hover:bg-black rounded'
+                    <Button
+                      onClick={showModal}
                       disabled={!to && !from}
-                      onClick={handleOrder}
+                      className='flex items-center px-6 py-2 ml-6 text-white border-0 rounded bg-orange focus:outline-none hover:bg-black hover:text-white'
                     >
                       Rent Now
-                    </button>
+                    </Button>
+                    <Modal
+                      title='Confirm your rental order ?'
+                      open={open}
+                      onOk={submitModal}
+                      onCancel={hideModal}
+                      okText='Yes'
+                      style={{
+                        position: "relative",
+                        top: "40%",
+                      }}
+                      cancelText='No'
+                    ></Modal>
                   </div>
                 </div>
               </div>
