@@ -34,7 +34,6 @@ const Login = () => {
   }, [userInfo]);
   return (
     <>
-      <Navbar />
       <div className='flex flex-col justify-center h-screen px-6 py-12 lg:px-8 bg-slate-50'>
         <div className='mt-5 sm:mx-auto sm:w-full sm:max-w-sm'>
           <Link to='/'>
@@ -122,7 +121,6 @@ const Login = () => {
           </p>
         </div>
       </div>
-      <Footer />
     </>
   );
 };

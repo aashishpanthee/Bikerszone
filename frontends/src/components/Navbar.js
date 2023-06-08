@@ -15,14 +15,14 @@ import { logout } from "../redux/features/User/authSlice";
 const navigation = [
   { name: "Home", href: "/" },
   { name: "Rent Bikes", href: "/bikerentsection" },
-  { name: "Your Orders", href: "/order" },
+  { name: "My Orders", href: "/order" },
 ];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Navbar() {
+export default function Navbar({ scrolled }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { loading, userInfo, error } = useSelector((state) => state.auth);
@@ -33,10 +33,17 @@ export default function Navbar() {
   };
 
   return (
-    <Disclosure as='nav' className='bg-slate-50'>
+    <Disclosure
+      as='nav'
+      className={`fixed top-0 w-full z-10 ${
+        scrolled
+          ? "bg-teal-100 opacity-100 transition-all duration-300"
+          : "bg-slate-50"
+      }`}
+    >
       {({ open }) => (
         <>
-          <div className='px-2 mx-auto max-w-7xl sm:px-6 lg:px-8'>
+          <div className='mx-auto max-w-7xl sm:px-6 lg:px-8'>
             <div className='relative flex items-center justify-between h-16'>
               <div className='absolute inset-y-0 left-0 flex items-center sm:hidden'>
                 {/* Mobile menu button*/}
@@ -81,15 +88,15 @@ export default function Navbar() {
               </div>
               {userInfo !== undefined && userInfo !== null ? (
                 <div className='flex items-center text-right'>
-                  <Link className='flex items-center' to='/cart'>
+                  {/* <Link className='flex items-center' to='/cart'>
                     <ShoppingBagIcon className='w-6 h-6 ' />
                     <span className='flex flex-col items-center justify-center font-semibold cursor-pointer'>
                       <span className=''>Your Cart</span>
                     </span>
-                  </Link>
+                  </Link> */}
                   <Menu as='div' className='text-left '>
                     <div>
-                      <Menu.Button className='inline-flex items-center justify-center w-full px-4 py-2 text-base font-medium rounded-md text-orange focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75'>
+                      <Menu.Button className='inline-flex items-center justify-center w-full px-4 py-2 text-xs font-medium rounded-md sm:text-base text-orange focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75'>
                         <img
                           src='../ashish.jpg'
                           alt=''

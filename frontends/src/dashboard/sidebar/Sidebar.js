@@ -12,7 +12,7 @@ export default function Sidebar() {
   //   if (userInfo) {
   return (
     <>
-      <nav className='flex-wrap items-center justify-between px-6 py-4 text-[#000839] shadow-xl relativeflex bg-[#00A1AB] md:left-0 md:block md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden md:w-64'>
+      <nav className='flex-wrap items-center justify-between px-6 py-4 text-[#000839] shadow-xl relativeflex bg-teal-200 md:left-0 md:block md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden md:w-64'>
         <div className='flex flex-wrap items-center justify-between w-full px-0 mx-auto md:flex-col md:items-stretch md:min-h-full md:flex-nowrap'>
           {/* Toggler */}
           <button
@@ -71,7 +71,7 @@ export default function Sidebar() {
             {/* Divider */}
             <hr className='my-4 md:min-w-full' />
             {/* Heading */}
-            <h6 className='block pt-1 pb-4 text-base font-bold text-gray-100 no-underline uppercase md:min-w-full'>
+            <h6 className='block pt-1 pb-4 text-base font-bold text-gray-900 no-underline uppercase md:min-w-full'>
               All datas
             </h6>
             {/* Navigation */}

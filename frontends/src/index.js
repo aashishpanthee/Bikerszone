@@ -10,23 +10,27 @@ import { store } from "../src/redux/store";
 import { Provider } from "react-redux";
 import { getTotals } from "./redux/features/Cart/cartSlice";
 import { BikeAll } from "./redux/features/Bikes/bikeAction";
+import { ConfigProvider } from "antd";
+import frFR from "antd/locale/fr_FR";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 store.dispatch(getTotals());
 root.render(
   <Provider store={store}>
-    <BrowserRouter>
-      <App />
-      <Toaster
-        position='top-right'
-        toastOptions={{
-          duration: 4000,
-          style: {
-            borderRadius: "8px",
-          },
-        }}
-      />
-    </BrowserRouter>
+    <ConfigProvider locale={frFR}>
+      <BrowserRouter>
+        <App />
+        <Toaster
+          position='top-right'
+          toastOptions={{
+            duration: 4000,
+            style: {
+              borderRadius: "8px",
+            },
+          }}
+        />
+      </BrowserRouter>
+    </ConfigProvider>
   </Provider>
 );
 

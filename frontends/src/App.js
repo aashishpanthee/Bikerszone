@@ -1,50 +1,40 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
-import Home from "./components/Home";
-import Login from "./components/Login";
-import Signup from "./components/Signup";
-import Unauthorized from "./Helper/Unauthorized";
-import Categories from "./components/Categories";
-import Contact from "./components/Contact";
-import Testimonial from "./components/Testimonial";
-import BikeRentSection from "./components/BikeRentSection";
 import Dashboard from "./dashboard/Dashboard";
 import ProtectedRoute from "./Helper/ProtectedRoute";
-import ProtectedElement from "./Helper/ProtectedElement";
-import Order from "./components/Order";
-import Cart from "./components/Cart";
+import { FloatButton } from "antd";
+import App1 from "./components/App1";
+import Loading from "./components/Loading";
+import "./App.css";
 
 function App() {
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 3000);
+  }, []);
   return (
-    <div className='bg-slate-50'>
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/login' element={<Login />} />
-        <Route path='/signup' element={<Signup />} />
-        <Route path='/bikecategory' element={<Categories />} />
-        <Route path='/bikerentsection' element={<BikeRentSection />} />
-        <Route path='/cart' element={<Cart />} />
-        <Route path='/reviews' element={<Testimonial />} />
-        <Route path='/contact' element={<Contact />} />
-        <Route
-          path='/order/:id'
-          element={
-            <ProtectedElement>
-              <Order />
-            </ProtectedElement>
-          }
-        />
-        <Route
-          path='/dashboard/*'
-          element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          }
-        />
-        <Route path='*' element={<Unauthorized />} />
-      </Routes>
-    </div>
+    <>
+      {loading ? (
+        <Loading />
+      ) : (
+        <div className='bg-slate-50'>
+          <Routes>
+            <Route path='/*' element={<App1 />} />
+            <Route
+              path='/dashboard/*'
+              element={
+                <ProtectedRoute>
+                  <Dashboard />
+                </ProtectedRoute>
+              }
+            />
+          </Routes>
+          <FloatButton.BackTop type='primary' visibilityHeight={50} />
+        </div>
+      )}
+    </>
   );
 }
 

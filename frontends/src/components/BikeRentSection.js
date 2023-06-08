@@ -9,6 +9,12 @@ import { addToCart } from "../redux/features/Cart/cartSlice";
 const BikeRentSection = () => {
   const dispatch = useDispatch();
   useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, []);
+  useEffect(() => {
     dispatch(BikeAll());
   }, [dispatch]);
   const { loading, bikes, error } = useSelector((state) => state.bike);
@@ -18,7 +24,6 @@ const BikeRentSection = () => {
   };
   return (
     <>
-      <Navbar />
       <section class='text-gray-600 body-font'>
         <div class='container px-5  mx-auto'>
           <div class='flex flex-wrap -m-4'>
@@ -71,7 +76,6 @@ const BikeRentSection = () => {
           </div>
         </div>
       </section>
-      <Footer />
     </>
   );
 };

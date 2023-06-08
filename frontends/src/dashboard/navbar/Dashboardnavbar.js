@@ -49,10 +49,10 @@ const Dashboardnavbar = () => {
                 />
                 <Menu as='div' className='text-left '>
                   <div>
-                    <Menu.Button className='inline-flex justify-center w-full py-2 text-base font-medium rounded-md text-slate-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75'>
+                    <Menu.Button className='inline-flex justify-center w-full py-2 text-base font-medium text-gray-200 rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75'>
                       {userInfo.name}
                       <ChevronDownIcon
-                        className='w-5 h-5 ml-2 -mr-1 text-slate-900 '
+                        className='w-5 h-5 ml-2 -mr-1 text-gray-200'
                         aria-hidden='true'
                       />
                     </Menu.Button>
