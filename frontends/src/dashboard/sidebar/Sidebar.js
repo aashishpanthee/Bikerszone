@@ -128,7 +128,7 @@ export default function Sidebar() {
               <li className='items-center'>
                 <Link
                   className='flex items-center text-sm font-bold uppercase '
-                  to='/admin/service'
+                  to='/dashboard/rental'
                 >
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
