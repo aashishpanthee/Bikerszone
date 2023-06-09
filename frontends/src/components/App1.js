@@ -12,7 +12,6 @@ import Testimonial from "./Testimonial";
 import BikeRentSection from "./BikeRentSection";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
-import ProtectedRoute from "../Helper/ProtectedRoute";
 
 const App1 = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -40,14 +39,7 @@ const App1 = () => {
           <Route path='/cart' element={<Cart />} />
           <Route path='/reviews' element={<Testimonial />} />
           <Route path='/contact' element={<Contact />} />
-          <Route
-            path='/order/:id'
-            element={
-              <ProtectedRoute>
-                <Order />
-              </ProtectedRoute>
-            }
-          />
+          <Route path='/order/:id' element={<Order />} />
           <Route path='*' element={<Unauthorized />} />
         </Routes>
       </div>

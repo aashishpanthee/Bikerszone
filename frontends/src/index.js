@@ -9,15 +9,14 @@ import { Toaster } from "react-hot-toast";
 import { store } from "../src/redux/store";
 import { Provider } from "react-redux";
 import { getTotals } from "./redux/features/Cart/cartSlice";
-import { BikeAll } from "./redux/features/Bikes/bikeAction";
 import { ConfigProvider } from "antd";
-import frFR from "antd/locale/fr_FR";
+import ne_NP from "antd/locale/fr_FR";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 store.dispatch(getTotals());
 root.render(
   <Provider store={store}>
-    <ConfigProvider locale={frFR}>
+    <ConfigProvider locale={ne_NP}>
       <BrowserRouter>
         <App />
         <Toaster

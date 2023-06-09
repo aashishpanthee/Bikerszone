@@ -6,6 +6,7 @@
 }
 html{
   overflow-x: hidden;
+  scroll-behavior: smooth;
 }
 .cart-container {
     padding: 2rem 4rem;
