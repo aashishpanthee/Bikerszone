@@ -9,6 +9,7 @@ import { DeleteBike } from "./DeleteBike";
 const BikeTable = ({ color }) => {
   const [showModal, setShowModal] = useState(false);
   const [bikeId, setBikeId] = useState();
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -169,7 +170,13 @@ const BikeTable = ({ color }) => {
           )}
         </tbody>
       </table>
-      {showModal && <DeleteBike id={bikeId} setShowModal={setShowModal} />}
+      {showModal && (
+        <DeleteBike
+          id={bikeId}
+          setShowModal={setShowModal}
+          showModal={showModal}
+        />
+      )}
     </>
   );
 };

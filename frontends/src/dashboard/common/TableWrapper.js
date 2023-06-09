@@ -7,6 +7,7 @@ const TableWrapper = ({
   success = "",
   title = "",
   addlink = "",
+  addTitle = "",
   method = "",
   handleBack,
   children,
@@ -22,7 +23,7 @@ const TableWrapper = ({
             className='px-4 py-2 mr-1 text-xs font-bold text-white uppercase transition-all duration-150 ease-linear bg-blue-400 rounded shadow outline-none active:bg-red-600 hover:shadow-md focus:outline-none'
             to={addlink}
           >
-            Add Bike
+            {addTitle}
           </Link>
         </div>
       </div>

@@ -6,7 +6,8 @@ export const AllOrder = createAsyncThunk(
   async (alluser, { rejectWithValue }) => {
     try {
       const data = await Http.get("/rent/bike");
-      return data.data.data;
+      console.log(data.data, "orderAction");
+      return data.data;
     } catch (error) {
       if (error.response && error.response.data.message) {
         return rejectWithValue(error.response.data.message);

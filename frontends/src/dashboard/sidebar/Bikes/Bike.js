@@ -5,7 +5,11 @@ import AddEditWrapper from "../../common/AddEditWrapper";
 
 const Bike = () => {
   return (
-    <TableWrapper title='Total Bikes' addlink='/dashboard/bikes/add'>
+    <TableWrapper
+      title='Total Bikes'
+      addlink='/dashboard/bikes/add'
+      addTitle='Add Bike'
+    >
       <BikeTable />
     </TableWrapper>
   );
