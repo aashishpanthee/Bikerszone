@@ -23,6 +23,7 @@ const Order = () => {
   const [open, setOpen] = useState(false);
   const { bikeById } = useSelector((state) => state.bike);
   const { loading, success } = useSelector((state) => state.order);
+  // const { userInfo } = useSelector((state) => state.auth);
   useEffect(() => {
     window.scrollTo({
       top: 0,
@@ -66,6 +67,7 @@ const Order = () => {
       startDate: from,
       endDate: to,
       bikeId: bikeById.id,
+      // userId: userInfo.id,
     };
     await dispatch(AddOrder(formData));
     await dispatch(clearFields());
